@@ -444,7 +444,7 @@ body {
 }
 
 .brief-box .brief-text {
-  color: #ffe066;
+  color: rgba(255, 224, 102, 0.8);
   margin: 0;
 }
 
@@ -667,7 +667,7 @@ body {
 }
 
 .tok-key { color: var(--accent); }
-.tok-bool { color: #ffe066; }
+.tok-bool { color: rgba(255, 224, 102, 0.8); }
 
 .code-panel .code-repo-url {
   font-family: var(--mono);
