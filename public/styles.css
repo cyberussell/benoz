@@ -714,6 +714,10 @@ body {
   font-size: 15px;
 }
 
+.decision-text strong {
+  color: rgba(255, 224, 102, 0.8);
+}
+
 .decision-meta {
   font-family: var(--mono);
   font-size: 12px;
