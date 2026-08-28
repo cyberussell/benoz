@@ -22,7 +22,11 @@
   document.querySelectorAll('[data-char-count-for]').forEach(function (counter) {
     var target = document.getElementById(counter.getAttribute('data-char-count-for'));
     if (!target) return;
-    var length = target.textContent.trim().length;
+    var paragraphs = target.querySelectorAll('p');
+    var text = paragraphs.length
+      ? Array.prototype.map.call(paragraphs, function (p) { return p.textContent.trim(); }).join('\n\n')
+      : target.textContent.trim();
+    var length = text.length;
     counter.textContent = length.toLocaleString() + ' character' + (length === 1 ? '' : 's');
   });
 
