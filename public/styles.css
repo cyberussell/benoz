@@ -45,6 +45,9 @@
     --hero-title-grad-1: #10141a;
     --hero-title-grad-2: #2c3644;
     --hero-code-opacity: 0;
+    --hero-frame-padding: clamp(28px, 6vw, 44px) clamp(24px, 8vw, 60px);
+    --hero-frame-border-color: var(--border);
+    --hero-frame-glow-opacity: 1;
   }
 }
 
@@ -68,6 +71,9 @@
   --hero-title-grad-1: #10141a;
   --hero-title-grad-2: #2c3644;
   --hero-code-opacity: 0;
+  --hero-frame-padding: clamp(28px, 6vw, 44px) clamp(24px, 8vw, 60px);
+  --hero-frame-border-color: var(--border);
+  --hero-frame-glow-opacity: 1;
 }
 
 :root[data-theme="dark"] {
@@ -326,6 +332,49 @@ body {
 .hero-code-bg .tok-var { color: #9cdcfe; }
 
 .hero-inner { position: relative; z-index: 1; max-width: 640px; display: flex; flex-direction: column; align-items: center; }
+
+@property --hero-glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes hero-frame-spin {
+  to { --hero-glow-angle: 360deg; }
+}
+
+.hero-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 28px;
+  padding: var(--hero-frame-padding, 0);
+  border: 1px solid var(--hero-frame-border-color, transparent);
+}
+
+.hero-frame::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--hero-glow-angle),
+    transparent 0deg,
+    transparent 300deg,
+    var(--accent) 328deg,
+    var(--yellow-accent) 344deg,
+    var(--accent) 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: var(--hero-frame-glow-opacity, 0);
+  filter: drop-shadow(0 0 5px var(--accent));
+  pointer-events: none;
+  animation: hero-frame-spin 7s linear infinite;
+}
 
 .hero-eyebrow {
   display: inline-block;
