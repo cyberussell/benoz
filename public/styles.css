@@ -244,6 +244,17 @@ body {
 
 .prose p:last-child { margin-bottom: 0; }
 
+.char-count {
+  margin: 18px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-align: right;
+}
+
 /* ---------- Placeholder blocks ---------- */
 
 .placeholder-block {

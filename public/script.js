@@ -19,6 +19,13 @@
     });
   }
 
+  document.querySelectorAll('[data-char-count-for]').forEach(function (counter) {
+    var target = document.getElementById(counter.getAttribute('data-char-count-for'));
+    if (!target) return;
+    var length = target.textContent.trim().length;
+    counter.textContent = length.toLocaleString() + ' character' + (length === 1 ? '' : 's');
+  });
+
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-list a[data-nav]'));
   var sections = navLinks
     .map(function (link) {
