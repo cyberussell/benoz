@@ -180,7 +180,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  opacity: 0.4;
+  opacity: 0.1;
   pointer-events: none;
   user-select: none;
   mask-image: linear-gradient(to bottom, transparent, black 12%, black 82%, transparent);
