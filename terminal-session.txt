@@ -1,0 +1,19 @@
+Script started on Sat Aug 29 07:20:20 2026
+[0m[49m[39m[27m[24m[K
+[1A7[0m[49m[39m[0m[49m[37m░▒▓[0m[37m[47m[38;5;232m [0m[38;5;232m[47m[47m[38;5;232m [0m[38;5;232m[47m[44m[37m[0m[37m[44m[44m[38;5;254m  [1m[38;5;254m[44m[38;5;255m~[0m[38;5;255m[44m[44m[38;5;254m/documents/[1m[38;5;254m[44m[38;5;255mbenoz[0m[38;5;255m[44m[44m[38;5;254m[0m[38;5;254m[44m[44m[38;5;254m [0m[38;5;254m[44m[49m[34m[0m[34m[49m[39m [0m[49m[39m                                                                                         [0m[49m[30m[0m[30m[40m[32m [0m[32m[40m[40m[32m✔[0m[32m[40m[40m[32m [49m[30m▓▒░[0m[30m[40m[32m[0m[32m[40m[49m[39m[0m[49m[39m[27m[24m[30C[?2004h[?25l8[0m[49m[39m[27m[24m[J]7;file://Russells-Mac-mini-4.local/Users/russellparayno/documents/benoz]2;russellparayno@Russells-Mac-mini-4]1;..cuments/benoz]7;file://Russells-Mac-mini-4.local/Users/russellparayno/documents/benoz\[0m[38;5;254m[49m[39m[27m[24m[1m[7m%[27m[1m[0m                                                                                                                              [0m[49m[39m[27m[24m[K[0m[27m[24m[J[0m[49m[39m[0m[49m[37m░▒▓[0m[37m[47m[38;5;232m [0m[38;5;232m[47m[47m[38;5;232m [0m[38;5;232m[47m[44m[37m[0m[37m[44m[44m[38;5;254m  [1m[38;5;254m[44m[38;5;255m~[0m[38;5;255m[44m[44m[38;5;254m/documents/[1m[38;5;254m[44m[38;5;255mbenoz[0m[38;5;255m[44m[44m[38;5;254m[0m[38;5;254m[44m[44m[38;5;254m [0m[38;5;254m[44m[42m[34m[0m[34m[42m[42m[30m on  [30m main [30m?1[0m[30m[42m[42m[30m [0m[30m[42m[49m[32m[0m[32m[49m[39m [0m[49m[39m[K[72C[0m[49m[30m[0m[30m[40m[32m [0m[32m[40m[40m[32m✔[0m[32m[40m[40m[32m [49m[30m▓▒░[0m[30m[40m[32m[0m[32m[40m[49m[39m[79D[?1h=[?25h[?2004h[7mnpm test 2>&1 | tee test-results.txt[27m[36D[27m[32mn[27m[32mp[27m[32mm[39m[27m [27mt[27me[27ms[27mt[27m [27m[33m2[27m[33m>[27m[33m&[39m[27m1[27m [27m|[27m [27m[32mt[27m[32me[27m[32me[39m[27m [27mt[27me[27ms[27mt[27m-[27mr[27me[27ms[27mu[27ml[27mt[27ms[27m.[27mt[27mx[27mt[?1l>[?2004l
+]2;npm test 2>&1 | tee test-results.txt]1;npm
+> benoz-takehome-starter@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/russellparayno/Documents/Benoz
+
+ ✓ tests/validator.test.ts (41 tests) 16ms
+
+ Test Files  1 passed (1)
+      Tests  41 passed (41)
+   Start at  07:21:13
+   Duration  325ms (transform 92ms, setup 0ms, collect 86ms, tests 16ms, environment 0ms, prepare 50ms)
+
+[1m[7m%[27m[1m[0m                                                                                                                               ]7;file://Russells-Mac-mini-4.local/Users/russellparayno/documents/benoz]2;russellparayno@Russells-Mac-mini-4]1;..cuments/benoz]7;file://Russells-Mac-mini-4.local/Users/russellparayno/documents/benoz\[0m[49m[39m[K
+[0m[27m[24m[J[0m[49m[39m[0m[49m[37m░▒▓[0m[37m[47m[38;5;232m [0m[38;5;232m[47m[47m[38;5;232m [0m[38;5;232m[47m[44m[37m[0m[37m[44m[44m[38;5;254m  [1m[38;5;254m[44m[38;5;255m~[0m[38;5;255m[44m[44m[38;5;254m/documents/[1m[38;5;254m[44m[38;5;255mbenoz[0m[38;5;255m[44m[44m[38;5;254m[0m[38;5;254m[44m[44m[38;5;254m [0m[38;5;254m[44m[42m[34m[0m[34m[42m[42m[30m on  [30m main [30m?2[0m[30m[42m[42m[30m [0m[30m[42m[49m[32m[0m[32m[49m[39m [0m[49m[39m[K[72C[0m[49m[30m[0m[30m[40m[32m [0m[32m[40m[40m[32m✔[0m[32m[40m[40m[32m [49m[30m▓▒░[0m[30m[40m[32m[0m[32m[40m[49m[39m[79D[?1h=[?2004h
