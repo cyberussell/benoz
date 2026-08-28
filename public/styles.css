@@ -288,6 +288,12 @@ body {
 }
 .placeholder-link:hover { text-decoration: underline; }
 
+.stack-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 /* ---------- Brief box ---------- */
 
 .brief-box {
