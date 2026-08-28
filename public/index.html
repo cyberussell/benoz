@@ -251,8 +251,8 @@
         </div>
         <ol class="decision-list">
           <li class="decision-card">
-            <div class="decision-row"><span class="decision-num">01</span><div class="decision-text"><strong>Database —</strong> I'd choose PostgreSQL. Client-defined fields can stay flexible in JSONB, while PostgreSQL gives strong transactions, relationships, and tenant isolation through RLS. The cost is more work managing JSONB indexes and RLS policies. With MongoDB, Part 3's validation logic could stay the same, but I'd lose database-level RLS and rely more on application code for tenant isolation.</div></div>
-            <p class="decision-meta">377 / 600 characters</p>
+            <div class="decision-row"><span class="decision-num">01</span><div class="decision-text"><strong>Database —</strong> I’d choose PostgreSQL. JSONB lets each client have different fields without changing the database structure for every client. PostgreSQL also gives strong transactions, relationships, and tenant isolation through RLS. The tradeoff is added work managing JSONB indexes and RLS policies. If we used MongoDB, my Part 3 validator would stay the same; I would only change how data is stored, retrieved, and isolated between clients.</div></div>
+            <p class="decision-meta">427 / 600 characters</p>
           </li>
           <li class="decision-card">
             <div class="decision-row"><span class="decision-num">02</span><div class="decision-text"><strong>Scope —</strong> I deliberately did not add compound AND/OR conditions. Supporting them would turn a simple rule format into a more complex expression system, making validation, testing, and error handling harder. I stopped at simple rules because they meet current requirements and keep the validator predictable and maintainable. I would add compound conditions only when a real client requirement justifies it. Cross-record checks, like preventing double-booking, are a separate, more significant boundary I have not addressed yet.</div></div>

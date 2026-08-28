@@ -44,7 +44,7 @@
     --stripe-overlay: rgba(15, 23, 32, 0.025);
     --hero-title-grad-1: #10141a;
     --hero-title-grad-2: #2c3644;
-    --hero-code-opacity: 0.3;
+    --hero-code-opacity: 0;
   }
 }
 
@@ -67,7 +67,7 @@
   --stripe-overlay: rgba(15, 23, 32, 0.025);
   --hero-title-grad-1: #10141a;
   --hero-title-grad-2: #2c3644;
-  --hero-code-opacity: 0.3;
+  --hero-code-opacity: 0;
 }
 
 :root[data-theme="dark"] {
