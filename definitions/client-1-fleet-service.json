@@ -1,0 +1,18 @@
+{
+  "client": "client-1",
+  "record_type": "vehicle_service",
+  "fields": [
+    { "name": "plate_number", "label": "Plate number", "type": "text", "required": true,
+      "constraints": { "pattern": "^[A-Z]{2}-[0-9]{4}$" } },
+    { "name": "vehicle_kind", "label": "Vehicle kind", "type": "choice", "required": true,
+      "options": ["van", "truck", "car", "motorcycle"] },
+    { "name": "service_date", "label": "Service date", "type": "date", "required": true },
+    { "name": "odometer_km", "label": "Odometer (km)", "type": "number", "required": true,
+      "constraints": { "min": 0, "max": 2000000 } },
+    { "name": "roadworthy", "label": "Roadworthy after service", "type": "boolean", "required": false },
+    { "name": "mechanic_notes", "label": "Mechanic notes", "type": "long_text", "required": false,
+      "constraints": { "max_length": 1500 } },
+    { "name": "invoice_file", "label": "Invoice", "type": "file", "required": false,
+      "constraints": { "accepted": ["pdf", "jpg"] } }
+  ]
+}

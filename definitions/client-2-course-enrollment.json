@@ -1,0 +1,18 @@
+{
+  "client": "client-2",
+  "record_type": "course_enrollment",
+  "fields": [
+    { "name": "enrollment_code", "label": "Enrollment code", "type": "text", "required": true,
+      "constraints": { "min_length": 6, "max_length": 12 } },
+    { "name": "course_level", "label": "Course level", "type": "choice", "required": true,
+      "options": ["beginner", "intermediate", "advanced"] },
+    { "name": "modules_selected", "label": "Modules selected", "type": "multi_choice", "required": true,
+      "options": ["theory", "lab", "fieldwork", "project", "exam"],
+      "constraints": { "min_selected": 1, "max_selected": 4 } },
+    { "name": "start_date", "label": "Start date", "type": "date", "required": true },
+    { "name": "seats_reserved", "label": "Seats reserved", "type": "number", "required": false,
+      "constraints": { "min": 1, "max": 30 } },
+    { "name": "motivation", "label": "Motivation statement", "type": "long_text", "required": false,
+      "constraints": { "max_length": 800 } }
+  ]
+}

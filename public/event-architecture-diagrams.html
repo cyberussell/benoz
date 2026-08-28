@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Platform — System Reference</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+<style>
+  :root{
+    --paper:#F3F4F1; --ink:#12161C; --ink-soft:#3c4450; --muted:#8891a0;
+    --blueprint:#0E1B2A; --blueprint-line:#CFE8F3;
+    --signal:#E8A33D; --critical:#E8555A;
+    --client:#5AA9E6; --app:#3BC9DB; --auth:#9C8CF5; --data:#63D68C; --jobs:#E8A33D; --ext:#E68FD1; --obs:#9AA6B2;
+    --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .page{ max-width:1120px; margin:0 auto; padding:48px 24px 96px; }
+
+  .hero{ margin-bottom:52px; }
+  .eyebrow{ font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; font-size:12px; color:var(--signal); margin:0 0 14px; font-weight:700; }
+  h1{ font-size:clamp(28px,4vw,42px); line-height:1.1; margin:0 0 16px; font-weight:800; letter-spacing:-0.01em; }
+  .dek{ font-size:16.5px; color:var(--ink-soft); max-width:72ch; margin:0 0 26px; }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:24px 32px; padding:16px 20px; background:#fff; border:1px solid #E3E1DA; border-radius:8px; }
+  .legend-group{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .legend-title{ font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-right:2px; }
+  .swatch{ display:inline-flex; align-items:center; gap:6px; font-size:13px; font-family:var(--mono); color:var(--ink-soft); }
+  .swatch::before{ content:""; width:10px; height:10px; border-radius:2px; background:var(--c); display:inline-block; }
+  .line-sample{ display:inline-block; width:26px; height:0; border-top:2px solid var(--ink-soft); vertical-align:middle; margin-right:6px; }
+  .line-sample.dotted{ border-top:2px dotted var(--ink-soft); }
+  .line-label{ font-size:13px; color:var(--ink-soft); margin-right:14px; }
+
+  .panel-section{ margin-bottom:60px; }
+  h2{ font-size:14px; text-transform:uppercase; letter-spacing:.07em; font-weight:700; display:flex; align-items:baseline; gap:10px; margin:0 0 12px; }
+  .num{ font-family:var(--mono); font-size:13px; color:var(--signal); font-weight:700; }
+  .section-intro{ color:var(--ink-soft); font-size:14.5px; max-width:82ch; margin:0 0 16px; }
+  .caption{ color:var(--muted); font-size:13px; margin-top:14px; max-width:82ch; }
+  .crit-inline{ color:var(--critical); font-weight:700; }
+
+  .blueprint{
+    position:relative;
+    background:var(--blueprint);
+    border-radius:3px;
+    padding:34px 20px 22px;
+    overflow-x:auto;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(207,232,243,.05) 0, rgba(207,232,243,.05) 1px, transparent 1px, transparent 28px),
+      repeating-linear-gradient(90deg, rgba(207,232,243,.05) 0, rgba(207,232,243,.05) 1px, transparent 1px, transparent 28px);
+  }
+  .fig-label{ position:absolute; top:10px; right:16px; font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:var(--blueprint-line); opacity:.55; text-transform:uppercase; }
+  pre.mermaid{ margin:0; padding:0; background:transparent; border:0; font-family:inherit; white-space:pre; overflow:visible; min-width:640px; }
+
+  .table-wrap{ overflow-x:auto; background:#fff; border:1px solid #E3E1DA; border-radius:8px; }
+  table{ border-collapse:collapse; width:100%; min-width:1000px; font-size:13.5px; }
+  thead th{ text-align:left; font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); padding:14px 16px; border-bottom:1px solid #E3E1DA; white-space:nowrap; background:#FAFAF8; }
+  tbody td{ padding:14px 16px; border-bottom:1px solid #EFEDE7; vertical-align:top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr{ border-left:4px solid transparent; }
+  tbody tr[data-cat="client"]{ border-left-color:var(--client); }
+  tbody tr[data-cat="app"]{ border-left-color:var(--app); }
+  tbody tr[data-cat="auth"]{ border-left-color:var(--auth); }
+  tbody tr[data-cat="data"]{ border-left-color:var(--data); }
+  tbody tr[data-cat="jobs"]{ border-left-color:var(--jobs); }
+  tbody tr[data-cat="ext"]{ border-left-color:var(--ext); }
+  tbody tr[data-cat="obs"]{ border-left-color:var(--obs); }
+  tbody tr.crit td.component{ position:relative; }
+  tbody tr.crit td.component::after{ content:"critical path"; display:block; font-family:var(--mono); font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--critical); margin-top:4px; font-weight:700; }
+
+  td.component{ font-weight:700; min-width:160px; }
+  td.choice{ font-family:var(--mono); font-size:12.5px; white-space:normal; min-width:220px; color:var(--ink); }
+  td.why{ color:var(--ink-soft); min-width:260px; }
+  td.rejected{ color:var(--muted); font-style:italic; min-width:160px; }
+  td.reason{ color:var(--ink-soft); min-width:260px; }
+
+  footer{ margin-top:40px; padding-top:24px; border-top:1px solid #E3E1DA; color:var(--muted); font-size:13px; }
+
+  @media (max-width:640px){
+    .page{ padding:32px 16px 72px; }
+    .legend{ gap:16px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+    <p class="eyebrow">Event Platform · System Reference</p>
+    <h1>Architecture, Stack Rationale &amp; Critical Flows</h1>
+    <p class="dek">Companion to the requirements document (§9) — the system shape, why each component won over its alternative, and the exact request sequence for the three highest-stakes workflows.</p>
+    <div class="legend">
+      <div class="legend-group">
+        <span class="legend-title">Layers</span>
+        <span class="swatch" style="--c:#5AA9E6">Client</span>
+        <span class="swatch" style="--c:#3BC9DB">Application</span>
+        <span class="swatch" style="--c:#9C8CF5">Auth</span>
+        <span class="swatch" style="--c:#63D68C">Data</span>
+        <span class="swatch" style="--c:#E8A33D">Background Jobs</span>
+        <span class="swatch" style="--c:#E68FD1">External Services</span>
+        <span class="swatch" style="--c:#9AA6B2">Observability</span>
+      </div>
+      <div class="legend-group">
+        <span class="legend-title">Lines</span>
+        <span class="line-sample"></span><span class="line-label">direct request path</span>
+        <span class="line-sample dotted"></span><span class="line-label">async / external / event-driven</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="panel-section">
+    <h2><span class="num">01</span> System Architecture</h2>
+    <div class="blueprint">
+      <span class="fig-label">Fig. 01 — System Map</span>
+      <pre class="mermaid">
+%%{init: {'theme':'base', 'themeVariables': {
+  'background':'#0E1B2A',
+  'primaryColor':'#132a3e',
+  'primaryTextColor':'#CFE8F3',
+  'primaryBorderColor':'#2DD4BF',
+  'lineColor':'#7FB3D5',
+  'clusterBkg':'#0E1B2A',
+  'clusterBorder':'#3d5f78',
+  'edgeLabelBackground':'#0E1B2A',
+  'fontFamily':'ui-monospace, Menlo, Consolas, monospace'
+}}}%%
+flowchart TB
+  subgraph CLIENT["Client Layer"]
+    ATT["Attendee Browser"]
+    ORGB["Organizer / Staff Browser"]
+    SCAN["Staff Check-in App"]
+  end
+
+  subgraph EDGE["Edge / CDN"]
+    CDN["Next.js on Vercel Edge - ISR event page"]
+  end
+
+  subgraph AUTHL["Auth"]
+    ORGAUTH["Clerk / Supabase Auth"]
+    ATTAUTH["Supabase Magic Link"]
+  end
+
+  subgraph APP["Application Layer"]
+    LOWFREQ["Fastify API - serverless<br/>browsing, publishing, dashboard"]
+    HOT["Fastify API - always-on + autoscale<br/>Register and Pay hot path"]
+  end
+
+  subgraph DATA["Data Layer"]
+    PG[("PostgreSQL Primary<br/>plus PgBouncer pooler")]
+    PGR[("Postgres Read Replica")]
+    REDISHOLD[("Redis - Holds<br/>TTL, AOF, Replica")]
+  end
+
+  subgraph JOBS["Background Processing"]
+    REDISQ[("Redis - Job Queue")]
+    TWORKER["Ticket Worker"]
+    RWORKER["Reminder Worker"]
+    CRON["Scheduler"]
+  end
+
+  subgraph EXT["External Services"]
+    STRIPE["Stripe"]
+    EMAILP["Postmark / Resend"]
+  end
+
+  subgraph OBS["Observability"]
+    SENTRY["Sentry"]
+    UPTIME["Uptime Checker"]
+  end
+
+  ATT --> CDN
+  CDN --> LOWFREQ
+  ATT -->|register| HOT
+  ORGB --> ORGAUTH
+  ORGAUTH --> LOWFREQ
+  ATT -->|resend / cancel / refund| ATTAUTH
+  ATTAUTH --> LOWFREQ
+  SCAN --> HOT
+
+  HOT --> REDISHOLD
+  HOT --> PG
+  LOWFREQ --> PGR
+  LOWFREQ --> PG
+
+  HOT -.->|payment| STRIPE
+  STRIPE -.->|webhook| HOT
+
+  HOT -.->|enqueue ticket job| REDISQ
+  CRON -.->|enqueue reminder job| REDISQ
+  REDISQ --> TWORKER
+  REDISQ --> RWORKER
+  TWORKER --> EMAILP
+  RWORKER --> EMAILP
+  TWORKER --> PG
+  RWORKER --> PGR
+
+  HOT -.-> SENTRY
+  PG -.-> UPTIME
+  REDISHOLD -.-> UPTIME
+
+  classDef client fill:#173049,stroke:#5AA9E6,color:#CFE8F3;
+  classDef app fill:#123a42,stroke:#3BC9DB,color:#CFE8F3;
+  classDef auth fill:#2a2452,stroke:#9C8CF5,color:#E7E1FB;
+  classDef data fill:#123a2e,stroke:#63D68C,color:#D9F5E3;
+  classDef jobs fill:#3a2f14,stroke:#E8A33D,color:#F6E4C7;
+  classDef ext fill:#3a1f38,stroke:#E68FD1,color:#F8DFF1;
+  classDef obs fill:#1a1a1a,stroke:#9AA6B2,color:#DDE3E8;
+
+  class ATT,ORGB,SCAN client;
+  class CDN,LOWFREQ,HOT app;
+  class ORGAUTH,ATTAUTH auth;
+  class PG,PGR,REDISHOLD data;
+  class REDISQ,TWORKER,RWORKER,CRON jobs;
+  class STRIPE,EMAILP ext;
+  class SENTRY,UPTIME obs;
+      </pre>
+    </div>
+    <p class="caption">Solid lines are direct request paths a user or staff device initiates and waits on. Dotted lines cross an async boundary — a webhook, a queued job, or telemetry — none of which block the caller. The two always-on/autoscale boxes in the Application layer split the idle public path (§7) from the checkout hot path, which stayed always-on after the cold-start stress test.</p>
+  </section>
+
+  <section class="panel-section">
+    <h2><span class="num">02</span> Annotated Stack Table</h2>
+    <p class="section-intro">Every row: the exact technology chosen, why it won, what was rejected, and why. Rows marked <span class="crit-inline">critical path</span> sit directly on Register &amp; Pay — the #1-ranked critical workflow (doc §8) — and were the rows the stress test scrutinized hardest.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Component</th><th>Exact Choice</th><th>Why</th><th>Rejected Alternative</th><th>Rejection Reason</th></tr>
+        </thead>
+        <tbody>
+          <tr data-cat="client">
+            <td class="component">Frontend</td>
+            <td class="choice">Next.js (React) — public event page as static/ISR on CDN edge</td>
+            <td class="why">The public event page is read-heavy and, per §1.3, displayed availability may be near-real-time — so it can be served almost entirely from the edge, isolating burst reads from burst writes.</td>
+            <td class="rejected">Remix</td>
+            <td class="reason">Comparable capability; Next.js’s ISR is a more first-class fit for this specific edge-caching pattern than Remix’s rendering model.</td>
+          </tr>
+          <tr data-cat="app" class="crit">
+            <td class="component">Backend framework</td>
+            <td class="choice">Fastify — lightweight, no heavy DI container</td>
+            <td class="why">Matches the hosting model on the hot path below; I/O-bound workload (payment calls, DB, email) suits Node well.</td>
+            <td class="rejected">NestJS</td>
+            <td class="reason">Stress-test finding: NestJS’s long-lived DI-container bootstrap fights serverless cold starts, worsening lock contention exactly on the #1-ranked critical workflow (§8).</td>
+          </tr>
+          <tr data-cat="app">
+            <td class="component">Hosting — public / low-frequency paths</td>
+            <td class="choice">Serverless / CDN (Vercel + Lambda)</td>
+            <td class="why">Browsing, publishing, and the organizer dashboard are genuinely idle most of the year (§7) — elastic capacity avoids paying for constant provisioning.</td>
+            <td class="rejected">Always-on PaaS for everything (Render/Railway)</td>
+            <td class="reason">Pays for idle capacity ~360+ days a year when load is concentrated in a handful of one-hour bursts.</td>
+          </tr>
+          <tr data-cat="app" class="crit">
+            <td class="component">Hosting — checkout / hold-creation hot path</td>
+            <td class="choice">Always-on autoscaling baseline (Fargate/Fly.io) + scheduled provisioned-concurrency warm-up</td>
+            <td class="why">This is the #1-ranked critical workflow (§8); a cold start colliding with peak contention was judged unacceptable by default. Opening times are known at publish time, so warm-up is schedulable.</td>
+            <td class="rejected">Full serverless, same as the public path</td>
+            <td class="reason">Stress-test finding: accepting cold-start risk here is a real cost/complexity tradeoff, not a free win, given what this workflow protects.</td>
+          </tr>
+          <tr data-cat="data" class="crit">
+            <td class="component">Database (system of record)</td>
+            <td class="choice">PostgreSQL + mandatory connection pooler (PgBouncer / RDS Proxy)</td>
+            <td class="why">Real transactional guarantees (row/advisory locks) for the §1.3 capacity invariant; the pooler is mandatory, not optional.</td>
+            <td class="rejected">MySQL</td>
+            <td class="reason">No meaningful advantage for this workload; Postgres’s native materialized-view support is also more mature for the dashboard read path (§7).</td>
+          </tr>
+          <tr data-cat="data">
+            <td class="component">Reporting / dashboard read path</td>
+            <td class="choice">Postgres read replica; materialized views refreshed CONCURRENTLY, read from the replica</td>
+            <td class="why">Structurally guarantees reporting reads never compete with checkout writes, satisfying §7’s isolation requirement.</td>
+            <td class="rejected">Event-driven aggregates in a separate store</td>
+            <td class="reason">Stress-test finding: cleaner isolation in principle, but materially higher build cost than the replica already delivers at this scale.</td>
+          </tr>
+          <tr data-cat="data" class="crit">
+            <td class="component">Hold / counter layer</td>
+            <td class="choice">Redis — managed, AOF persistence + replication, dedicated instance</td>
+            <td class="why">Native TTL/EXPIRE maps directly onto §1.3’s automatic hold-expiry requirement; keeps the hottest operation off the durable DB.</td>
+            <td class="rejected">Postgres row locks alone, no separate cache</td>
+            <td class="reason">Legitimate if §6’s peak-demand number comes back low — rejected only provisionally, pending that still-open answer. Persistence/replication itself is required after a stress-test finding that an unreplicated restart mid-burst would silently free held seats.</td>
+          </tr>
+          <tr data-cat="jobs">
+            <td class="component">Job queue</td>
+            <td class="choice">BullMQ on a second, separate Redis instance</td>
+            <td class="why">Decouples ticket issuance and reminder dispatch from the checkout response and absorbs batch spikes (§7).</td>
+            <td class="rejected">SQS + Lambda workers</td>
+            <td class="reason">A reasonable AWS-native alternative, rejected mainly for consistency with the Node/Redis stack, not a capability gap. Separated from the hold-counter Redis after a stress-test finding that a shared instance let a notification backlog steal capacity-check resources.</td>
+          </tr>
+          <tr data-cat="auth">
+            <td class="component">Auth — organizer / staff</td>
+            <td class="choice">Managed provider (Clerk / Supabase Auth)</td>
+            <td class="why">Organizers and check-in staff need real accounts with roles (§5 AuthZ boundaries) — buy, don’t build password storage, sessions, MFA.</td>
+            <td class="rejected">AWS Cognito</td>
+            <td class="reason">Comparable capability; rejected for developer-experience overhead relative to Clerk/Supabase absent an existing AWS-native stack.</td>
+          </tr>
+          <tr data-cat="auth">
+            <td class="component">Auth — attendee (resend / cancel / refund)</td>
+            <td class="choice">Managed passwordless / magic-link feature (e.g., Supabase Auth magic links)</td>
+            <td class="why">Sits directly upstream of a financial action (refund, §5); still contingent on §6’s open identity-verification question.</td>
+            <td class="rejected">Custom-built lightweight magic-link system</td>
+            <td class="reason">Stress-test finding: cheaper to build, but puts custom token-expiry/single-use/replay code directly ahead of a financial action — too much risk for the savings.</td>
+          </tr>
+          <tr data-cat="ext">
+            <td class="component">Payments</td>
+            <td class="choice">Stripe</td>
+            <td class="why">International reach and ease of integration for both developers (Checkout/Elements handle §5’s PCI tokenization) and customers (localized Checkout, native wallets).</td>
+            <td class="rejected">PayMongo / Xendit (regional gateways)</td>
+            <td class="reason">Don’t cover the international/ease requirement as cleanly and can carry a regional-throughput ceiling into a burst (stress-test finding #4). Local rails (GCash, etc.) remain a separate, still-open question (§6) Stripe doesn’t resolve.</td>
+          </tr>
+          <tr data-cat="ext">
+            <td class="component">Email</td>
+            <td class="choice">Postmark / Resend</td>
+            <td class="why">Tickets and reminders are must-arrive transactional email — deliverability matters more than per-email cost. Handles §7’s rate-aware queued sending for a ~2,000-email burst.</td>
+            <td class="rejected">Amazon SES</td>
+            <td class="reason">Cheaper at volume, but pushes sender-reputation management onto the team — not worth it until volume justifies the tradeoff.</td>
+          </tr>
+          <tr data-cat="obs">
+            <td class="component">Monitoring</td>
+            <td class="choice">Sentry + uptime checker, with explicit alerts on Postgres pool saturation and Redis replication lag/failover</td>
+            <td class="why">A mostly-idle system (§7) doesn’t justify a full APM platform’s cost by default; the two named alerts target the exact failure modes the pooler and Redis-replication decisions exist to prevent.</td>
+            <td class="rejected">Datadog / New Relic</td>
+            <td class="reason">Priced and featured for constant-traffic systems; justified only if the lighter stack proves hard to diagnose during real burst events.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel-section">
+    <h2><span class="num">03</span> Registration &amp; Payment — Sequence</h2>
+    <p class="section-intro">Ranked #1 of 7 critical workflows (doc §8) — the only flow carrying revenue, capacity correctness, and peak load at once. The hold-creation step is the sole point capacity is claimed; confirmation is a bucket transfer, not a second decrement (doc §1.3/§3.B).</p>
+    <div class="blueprint">
+      <span class="fig-label">Fig. 02 — Register &amp; Pay</span>
+      <pre class="mermaid">
+%%{init: {'theme':'base', 'themeVariables': {
+  'background':'#0E1B2A',
+  'primaryColor':'#132a3e',
+  'primaryTextColor':'#CFE8F3',
+  'primaryBorderColor':'#2DD4BF',
+  'lineColor':'#7FB3D5',
+  'actorBkg':'#173049',
+  'actorBorder':'#5AA9E6',
+  'actorTextColor':'#CFE8F3',
+  'actorLineColor':'#5AA9E6',
+  'signalColor':'#CFE8F3',
+  'signalTextColor':'#CFE8F3',
+  'labelBoxBkgColor':'#1b3a52',
+  'labelBoxBorderColor':'#2DD4BF',
+  'labelTextColor':'#CFE8F3',
+  'loopTextColor':'#CFE8F3',
+  'noteBkgColor':'#20314a',
+  'noteTextColor':'#F3E3C7',
+  'noteBorderColor':'#E8A33D',
+  'activationBkgColor':'#2a4a63',
+  'activationBorderColor':'#2DD4BF',
+  'sequenceNumberColor':'#0E1B2A',
+  'fontFamily':'ui-monospace, Menlo, Consolas, monospace'
+}}}%%
+sequenceDiagram
+  autonumber
+  actor A as Attendee
+  participant FE as Frontend - CDN
+  participant API as Backend - Hot Path
+  participant R as Redis - Holds
+  participant DB as Postgres - Primary
+  participant S as Stripe
+  participant Q as Job Queue
+  participant TW as Ticket Worker
+  participant E as Email Provider
+
+  A->>FE: Open event page
+  FE-->>A: Render page - cached availability
+  A->>API: POST /register - quantity
+  API->>R: Check Confirmed + Active Holds, create Hold - atomic, TTL
+  alt Capacity available
+    R-->>API: Hold created
+    API-->>A: Redirect to Stripe Checkout
+    A->>S: Complete payment
+    S-->>API: Webhook - payment succeeded - signed
+    API->>DB: Convert Hold to Confirmed Registration + Payment - transaction
+    DB-->>API: Committed
+    API-->>A: Show confirmation page
+    API->>Q: Enqueue ticket issuance job
+    Q->>TW: Process job
+    TW->>TW: Generate ticket ID and signed QR
+    TW->>E: Send ticket email
+    E-->>TW: Accepted
+    TW->>DB: Mark ticket issued
+  else Capacity full
+    R-->>API: No seats available
+    API-->>A: Show sold out
+  end
+
+  Note over A,API: If payment is not completed within the hold timeout, Redis expires the hold and the seat returns to Available automatically.
+      </pre>
+    </div>
+  </section>
+
+  <section class="panel-section">
+    <h2><span class="num">04</span> 24-Hour Reminder — Sequence</h2>
+    <p class="section-intro">Ranked #7 of 7 — lowest criticality. A convenience layer on top of information the attendee already has in the ticket email; failure here costs preparedness, not money or seats (doc §8).</p>
+    <div class="blueprint">
+      <span class="fig-label">Fig. 03 — Reminder Dispatch</span>
+      <pre class="mermaid">
+%%{init: {'theme':'base', 'themeVariables': {
+  'background':'#0E1B2A',
+  'primaryColor':'#132a3e',
+  'primaryTextColor':'#CFE8F3',
+  'primaryBorderColor':'#2DD4BF',
+  'lineColor':'#7FB3D5',
+  'actorBkg':'#173049',
+  'actorBorder':'#5AA9E6',
+  'actorTextColor':'#CFE8F3',
+  'actorLineColor':'#5AA9E6',
+  'signalColor':'#CFE8F3',
+  'signalTextColor':'#CFE8F3',
+  'labelBoxBkgColor':'#1b3a52',
+  'labelBoxBorderColor':'#2DD4BF',
+  'labelTextColor':'#CFE8F3',
+  'loopTextColor':'#CFE8F3',
+  'noteBkgColor':'#20314a',
+  'noteTextColor':'#F3E3C7',
+  'noteBorderColor':'#E8A33D',
+  'activationBkgColor':'#2a4a63',
+  'activationBorderColor':'#2DD4BF',
+  'sequenceNumberColor':'#0E1B2A',
+  'fontFamily':'ui-monospace, Menlo, Consolas, monospace'
+}}}%%
+sequenceDiagram
+  autonumber
+  participant C as Scheduler - Cron
+  participant API as Backend
+  participant PR as Postgres Read Replica
+  participant Q as Job Queue
+  participant RW as Reminder Worker
+  participant E as Email Provider
+  participant DB as Postgres Primary
+
+  C->>API: Trigger - events starting in about 24h
+  API->>PR: Query confirmed attendees not yet reminded
+  PR-->>API: Attendee list
+  API->>Q: Enqueue reminder jobs - batch
+  loop For each queued reminder
+    Q->>RW: Process job
+    RW->>RW: Render reminder email with ticket and QR
+    RW->>E: Send reminder email
+    E-->>RW: Accepted
+    RW->>DB: Mark attendee as reminded - idempotent
+  end
+
+  Note over API,Q: Late registrants within 24h are excluded per the too-late-for-reminder rule.
+      </pre>
+    </div>
+  </section>
+
+  <section class="panel-section">
+    <h2><span class="num">05</span> QR Check-In — Sequence</h2>
+    <p class="section-intro">Ranked #3 of 7 — highly visible at the door, with an explicit fallback if scanning fails (doc §1.7). Both branches below are shown because the online/offline check-in model is still an open question (doc §6), and the security guarantees differ materially between them (doc §5).</p>
+    <div class="blueprint">
+      <span class="fig-label">Fig. 04 — Check-In</span>
+      <pre class="mermaid">
+%%{init: {'theme':'base', 'themeVariables': {
+  'background':'#0E1B2A',
+  'primaryColor':'#132a3e',
+  'primaryTextColor':'#CFE8F3',
+  'primaryBorderColor':'#2DD4BF',
+  'lineColor':'#7FB3D5',
+  'actorBkg':'#173049',
+  'actorBorder':'#5AA9E6',
+  'actorTextColor':'#CFE8F3',
+  'actorLineColor':'#5AA9E6',
+  'signalColor':'#CFE8F3',
+  'signalTextColor':'#CFE8F3',
+  'labelBoxBkgColor':'#1b3a52',
+  'labelBoxBorderColor':'#2DD4BF',
+  'labelTextColor':'#CFE8F3',
+  'loopTextColor':'#CFE8F3',
+  'noteBkgColor':'#20314a',
+  'noteTextColor':'#F3E3C7',
+  'noteBorderColor':'#E8A33D',
+  'activationBkgColor':'#2a4a63',
+  'activationBorderColor':'#2DD4BF',
+  'sequenceNumberColor':'#0E1B2A',
+  'fontFamily':'ui-monospace, Menlo, Consolas, monospace'
+}}}%%
+sequenceDiagram
+  autonumber
+  actor St as Staff
+  participant Sc as Scanner App
+  participant API as Backend
+  participant DB as Postgres
+  participant Dash as Dashboard Read Model
+
+  St->>Sc: Scan attendee QR code
+  Sc->>Sc: Read signed ticket payload
+
+  alt Online model
+    Sc->>API: Send ticket ID for validation
+    API->>DB: Verify signature, check status, mark checked-in - atomic
+    alt Ticket valid and unused
+      DB-->>API: Marked checked-in
+      API-->>Sc: Valid - Admit
+    else Already used or invalid
+      DB-->>API: Rejected
+      API-->>Sc: Invalid - Deny
+    end
+  else Offline model
+    Sc->>Sc: Verify signature locally against embedded public key
+    Sc->>Sc: Mark checked-in locally, queue for sync
+    Note over Sc,API: True single-use across devices is not guaranteed until sync.
+    Sc-->>API: Sync when connectivity returns
+    API->>DB: Reconcile - flag duplicate checked-in tickets
+  end
+
+  API->>Dash: Update live check-in count
+  Dash-->>St: Reflected on organizer dashboard
+      </pre>
+    </div>
+    <p class="caption">Online: the server checks signature and "used" status together, so single-use is truly atomic. Offline: the device verifies the signature locally with no server round-trip, and single-use becomes a post-sync reconciliation problem rather than a real-time guarantee.</p>
+  </section>
+
+  <footer>
+    Companion diagram set for <em>event-workflow-requirements.md</em> — reflects the stack decisions and stress-test findings recorded in §9 of that document. Not a substitute for it.
+  </footer>
+
+</div>
+<script>
+  mermaid.initialize({ startOnLoad: true });
+</script>
+</body>
+</html>

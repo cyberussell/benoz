@@ -1,0 +1,19 @@
+{
+  "client": "client-3",
+  "record_type": "venue_booking",
+  "fields": [
+    { "name": "booking_ref", "label": "Booking reference", "type": "text", "required": true,
+      "constraints": { "pattern": "^BK[0-9]{6}$" } },
+    { "name": "hall", "label": "Hall", "type": "choice", "required": true,
+      "options": ["main", "annex"] },
+    { "name": "event_date", "label": "Event date", "type": "date", "required": true },
+    { "name": "expected_guests", "label": "Expected guests", "type": "number", "required": true,
+      "constraints": { "min": 1 } },
+    { "name": "catering", "label": "Catering required", "type": "boolean", "required": false },
+    { "name": "setup_requirements", "label": "Setup requirements", "type": "multi_choice", "required": false,
+      "options": ["stage", "projector", "sound", "seating_rows", "round_tables"],
+      "constraints": { "max_selected": 3 } },
+    { "name": "floor_plan", "label": "Floor plan", "type": "file", "required": false,
+      "constraints": { "accepted": ["pdf"] } }
+  ]
+}
