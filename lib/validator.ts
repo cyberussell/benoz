@@ -1,7 +1,12 @@
 import {
   ClientDefinition,
+  ComparisonOperator,
+  ConditionalRequiredRule,
+  FieldComparisonRule,
   FieldDefinition,
+  FieldType,
   RecordData,
+  Rule,
   ValidationError,
   ValidationResult,
 } from "./types";
@@ -106,12 +111,138 @@ function validateField(field: FieldDefinition, value: unknown): ValidationError[
   return errors;
 }
 
+// Field types a `field_comparison` rule can order. Anything else is inert.
+type OrderableType = "date" | "number";
+
+function isOrderableType(type: FieldType): type is OrderableType {
+  return type === "date" || type === "number";
+}
+
+function orderableValue(type: OrderableType, raw: unknown): number | undefined {
+  if (type === "number") {
+    return typeof raw === "number" && !Number.isNaN(raw) ? raw : undefined;
+  }
+  if (typeof raw !== "string") return undefined;
+  const t = new Date(`${raw}T00:00:00Z`).getTime();
+  return Number.isNaN(t) ? undefined : t;
+}
+
+function comparisonHolds(operator: ComparisonOperator, a: number, b: number): boolean {
+  switch (operator) {
+    case "lt":
+      return a < b;
+    case "lte":
+      return a <= b;
+    case "gt":
+      return a > b;
+    case "gte":
+      return a >= b;
+    case "eq":
+      return a === b;
+    case "neq":
+      return a !== b;
+  }
+}
+
+const COMPARISON_MESSAGES: Record<OrderableType, Record<ComparisonOperator, (label: string) => string>> = {
+  date: {
+    lt: (label) => `Must be before ${label}`,
+    lte: (label) => `Must be on or before ${label}`,
+    gt: (label) => `Must be after ${label}`,
+    gte: (label) => `Must be on or after ${label}`,
+    eq: (label) => `Must be the same date as ${label}`,
+    neq: (label) => `Must be a different date than ${label}`,
+  },
+  number: {
+    lt: (label) => `Must be less than ${label}`,
+    lte: (label) => `Must be at most ${label}`,
+    gt: (label) => `Must be greater than ${label}`,
+    gte: (label) => `Must be at least ${label}`,
+    eq: (label) => `Must equal ${label}`,
+    neq: (label) => `Must not equal ${label}`,
+  },
+};
+
+/**
+ * Evaluates one field_comparison rule against a frozen base-error snapshot.
+ * Skipped (returns null) whenever a meaningful comparison isn't possible:
+ * unknown field reference, mismatched/unsupported types, either side empty,
+ * or either side already reported invalid in the base pass.
+ */
+function evaluateFieldComparison(
+  rule: FieldComparisonRule,
+  fieldsByName: Map<string, FieldDefinition>,
+  record: RecordData,
+  invalidFields: Set<string>
+): ValidationError | null {
+  const subject = fieldsByName.get(rule.field);
+  const other = fieldsByName.get(rule.compare_to);
+  if (!subject || !other) return null;
+  if (subject.type !== other.type || !isOrderableType(subject.type)) return null;
+
+  if (invalidFields.has(rule.field) || invalidFields.has(rule.compare_to)) return null;
+
+  const subjectRaw = record[rule.field];
+  const otherRaw = record[rule.compare_to];
+  if (isEmpty(subjectRaw) || isEmpty(otherRaw)) return null;
+
+  const type = subject.type;
+  const a = orderableValue(type, subjectRaw);
+  const b = orderableValue(type, otherRaw);
+  if (a === undefined || b === undefined) return null;
+
+  if (comparisonHolds(rule.operator, a, b)) return null;
+
+  return {
+    field: rule.field,
+    error: rule.message ?? COMPARISON_MESSAGES[type][rule.operator](other.label),
+  };
+}
+
+/**
+ * Evaluates one conditional_required rule against a frozen base-error
+ * snapshot. Skipped when `field` is unknown or already invalid (this also
+ * prevents a duplicate "This field is required" when `field` is statically
+ * required too). `when` needs no such check: strict equality against a
+ * missing, invalid, or unknown dependency's value simply fails to match.
+ */
+function evaluateConditionalRequired(
+  rule: ConditionalRequiredRule,
+  fieldsByName: Map<string, FieldDefinition>,
+  record: RecordData,
+  invalidFields: Set<string>
+): ValidationError | null {
+  if (!fieldsByName.has(rule.field)) return null;
+  if (invalidFields.has(rule.field)) return null;
+  if (record[rule.when] !== rule.equals) return null;
+  if (!isEmpty(record[rule.field])) return null;
+
+  return {
+    field: rule.field,
+    error: rule.message ?? "This field is required",
+  };
+}
+
+function evaluateRule(
+  rule: Rule,
+  fieldsByName: Map<string, FieldDefinition>,
+  record: RecordData,
+  invalidFields: Set<string>
+): ValidationError | null {
+  return rule.type === "field_comparison"
+    ? evaluateFieldComparison(rule, fieldsByName, record, invalidFields)
+    : evaluateConditionalRequired(rule, fieldsByName, record, invalidFields);
+}
+
 /**
  * Validate one record against a client definition.
  * Returns an empty array when the record is valid.
  *
- * Unknown keys in the record (keys with no field definition) are reported
- * as errors: the engine fails closed on fields it does not recognise.
+ * Two passes. Pass 1 validates each declared field independently and flags
+ * unknown record keys (fail-closed). Pass 2 evaluates `rules`, each rule
+ * exactly once against the Pass 1 result — rules never see each other's
+ * output, so declaration order affects only the position of rule errors in
+ * the returned array, never which errors appear.
  */
 export function validate(
   definition: ClientDefinition,
@@ -128,6 +259,14 @@ export function validate(
     if (!known.has(key)) {
       errors.push({ field: key, error: "Unknown field" });
     }
+  }
+
+  const invalidFields = new Set(errors.map((e) => e.field));
+  const fieldsByName = new Map(definition.fields.map((f) => [f.name, f]));
+
+  for (const rule of definition.rules ?? []) {
+    const error = evaluateRule(rule, fieldsByName, record, invalidFields);
+    if (error) errors.push(error);
   }
 
   return errors;
