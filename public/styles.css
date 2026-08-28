@@ -17,6 +17,7 @@
   --stripe-overlay: rgba(74, 116, 167, 0.04);
   --hero-title-grad-1: #dceaf7;
   --hero-title-grad-2: #4a74a7;
+  --hero-code-opacity: 0.1;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --sans: 'Inter', system-ui, -apple-system, sans-serif;
   --nav-h: 60px;
@@ -43,6 +44,7 @@
     --stripe-overlay: rgba(15, 23, 32, 0.025);
     --hero-title-grad-1: #10141a;
     --hero-title-grad-2: #2c3644;
+    --hero-code-opacity: 0.3;
   }
 }
 
@@ -65,6 +67,7 @@
   --stripe-overlay: rgba(15, 23, 32, 0.025);
   --hero-title-grad-1: #10141a;
   --hero-title-grad-2: #2c3644;
+  --hero-code-opacity: 0.3;
 }
 
 :root[data-theme="dark"] {
@@ -86,6 +89,7 @@
   --stripe-overlay: rgba(74, 116, 167, 0.04);
   --hero-title-grad-1: #dceaf7;
   --hero-title-grad-2: #4a74a7;
+  --hero-code-opacity: 0.1;
 }
 
 * { box-sizing: border-box; }
@@ -293,7 +297,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  opacity: 0.1;
+  opacity: var(--hero-code-opacity);
   pointer-events: none;
   user-select: none;
   mask-image: linear-gradient(to bottom, transparent, black 12%, black 82%, transparent);
