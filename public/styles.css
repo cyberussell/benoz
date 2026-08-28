@@ -311,6 +311,84 @@ body {
   margin: 0;
 }
 
+/* ---------- Tech stack ---------- */
+
+.stack-panel {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 24px 26px;
+}
+
+.stack-panel-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.stack-category {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 16px 18px;
+}
+
+.stack-category-title {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stack-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.stack-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64px;
+  gap: 8px;
+}
+
+.stack-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.stack-icon img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.stack-name {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.3;
+}
+
 /* ---------- Six decisions ---------- */
 
 .decision-list {
@@ -373,6 +451,8 @@ body {
   .nav-list a { padding: 10px 14px; }
   .hero { padding-top: 140px; }
   .part { padding: 72px 20px; }
+  .stack-panel { padding: 18px 16px 20px; }
+  .stack-grid { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
