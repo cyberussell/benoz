@@ -315,8 +315,8 @@
             <p class="decision-meta">427 / 600 characters</p>
           </li>
           <li class="decision-card">
-            <div class="decision-row"><span class="decision-num">02</span><div class="decision-text"><strong>Scope —</strong> I deliberately did not add compound AND/OR conditions. Supporting them would turn a simple rule format into a more complex expression system, making validation, testing, and error handling harder. I stopped at simple rules because they meet current requirements and keep the validator predictable and maintainable. I would add compound conditions only when a real client requirement justifies it. Cross-record checks, like preventing double-booking, are a separate, more significant boundary I have not addressed yet.</div></div>
-            <p class="decision-meta">517 / 600 characters</p>
+            <div class="decision-row"><span class="decision-num">02</span><div class="decision-text"><strong>Scope —</strong> I deliberately did not add cross-record rules, such as preventing double-booking or duplicate values. My validator only checks one record at a time and has no database access. Adding these rules would introduce storage and concurrency concerns into a simple, client-agnostic validator. I stopped there because cross-record constraints should be enforced at the database layer, where they can be guaranteed safely.</div></div>
+            <p class="decision-meta">413 / 600 characters</p>
           </li>
           <li class="decision-card">
             <div class="decision-row"><span class="decision-num">03</span><div class="decision-text"><strong>Isolation —</strong> I'd choose a shared database with strict tenant isolation using tenant_id and RLS. It keeps infrastructure cost low, onboarding simple, and lets one platform serve many clients efficiently. The tradeoff is that logical isolation cannot satisfy a client requiring their data to never share infrastructure with others. I accept losing that client rather than making every tenant pay the cost and operational complexity of dedicated infrastructure.</div></div>
