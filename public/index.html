@@ -245,6 +245,10 @@
       <p class="part-kicker">Part 4</p>
       <h2 class="part-title" id="part-4-title">Six Decisions</h2>
       <div class="prose">
+        <div class="brief-box">
+          <p class="brief-label">Context</p>
+          <p class="brief-text">The library you just extended is the seed of a multi-tenant platform: one codebase serving many client organisations, where every client difference is configuration rather than code. Answer with that platform in mind. Decisions 1 and 2 refer directly to the code you wrote in Part 3.</p>
+        </div>
         <ol class="decision-list">
           <li class="decision-card">
             <div class="decision-row"><span class="decision-num">01</span><div class="decision-text"><strong>Database —</strong> I'd choose PostgreSQL. Client-defined fields can stay flexible in JSONB, while PostgreSQL gives strong transactions, relationships, and tenant isolation through RLS. The cost is more work managing JSONB indexes and RLS policies. With MongoDB, Part 3's validation logic could stay the same, but I'd lose database-level RLS and rely more on application code for tenant isolation.</div></div>

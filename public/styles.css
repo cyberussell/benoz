@@ -1,22 +1,22 @@
 :root {
-  --bg: #0b0d10;
-  --bg-elevated: #14171b;
-  --border: #23272e;
-  --text: #eef1f4;
-  --text-muted: #9aa3ad;
-  --text-secondary: #d3d8de;
-  --accent: #5b9dff;
-  --accent-soft: rgba(91, 157, 255, 0.14);
-  --on-accent: #071b3d;
+  --bg: #081426;
+  --bg-elevated: #142a44;
+  --border: #4a74a7;
+  --text: #dceaf7;
+  --text-muted: rgba(220, 234, 247, 0.58);
+  --text-secondary: rgba(220, 234, 247, 0.82);
+  --accent: #4a74a7;
+  --accent-soft: rgba(74, 116, 167, 0.16);
+  --on-accent: #dceaf7;
   --yellow-accent: rgba(255, 224, 102, 0.8);
-  --overlay-1: rgba(255, 255, 255, 0.02);
-  --overlay-2: rgba(255, 255, 255, 0.045);
-  --overlay-3: rgba(255, 255, 255, 0.06);
-  --nav-bg: rgba(20, 23, 27, 0.72);
-  --tooltip-bg: rgba(20, 23, 27, 0.96);
-  --stripe-overlay: rgba(255, 255, 255, 0.015);
-  --hero-title-grad-1: #ffffff;
-  --hero-title-grad-2: #cfe1ff;
+  --overlay-1: rgba(74, 116, 167, 0.08);
+  --overlay-2: rgba(74, 116, 167, 0.14);
+  --overlay-3: rgba(74, 116, 167, 0.2);
+  --nav-bg: rgba(8, 20, 38, 0.75);
+  --tooltip-bg: rgba(20, 42, 68, 0.96);
+  --stripe-overlay: rgba(74, 116, 167, 0.04);
+  --hero-title-grad-1: #dceaf7;
+  --hero-title-grad-2: #4a74a7;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --sans: 'Inter', system-ui, -apple-system, sans-serif;
   --nav-h: 60px;
@@ -68,24 +68,24 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #0b0d10;
-  --bg-elevated: #14171b;
-  --border: #23272e;
-  --text: #eef1f4;
-  --text-muted: #9aa3ad;
-  --text-secondary: #d3d8de;
-  --accent: #5b9dff;
-  --accent-soft: rgba(91, 157, 255, 0.14);
-  --on-accent: #071b3d;
+  --bg: #081426;
+  --bg-elevated: #142a44;
+  --border: #4a74a7;
+  --text: #dceaf7;
+  --text-muted: rgba(220, 234, 247, 0.58);
+  --text-secondary: rgba(220, 234, 247, 0.82);
+  --accent: #4a74a7;
+  --accent-soft: rgba(74, 116, 167, 0.16);
+  --on-accent: #dceaf7;
   --yellow-accent: rgba(255, 224, 102, 0.8);
-  --overlay-1: rgba(255, 255, 255, 0.02);
-  --overlay-2: rgba(255, 255, 255, 0.045);
-  --overlay-3: rgba(255, 255, 255, 0.06);
-  --nav-bg: rgba(20, 23, 27, 0.72);
-  --tooltip-bg: rgba(20, 23, 27, 0.96);
-  --stripe-overlay: rgba(255, 255, 255, 0.015);
-  --hero-title-grad-1: #ffffff;
-  --hero-title-grad-2: #cfe1ff;
+  --overlay-1: rgba(74, 116, 167, 0.08);
+  --overlay-2: rgba(74, 116, 167, 0.14);
+  --overlay-3: rgba(74, 116, 167, 0.2);
+  --nav-bg: rgba(8, 20, 38, 0.75);
+  --tooltip-bg: rgba(20, 42, 68, 0.96);
+  --stripe-overlay: rgba(74, 116, 167, 0.04);
+  --hero-title-grad-1: #dceaf7;
+  --hero-title-grad-2: #4a74a7;
 }
 
 * { box-sizing: border-box; }
@@ -279,8 +279,8 @@ body {
   padding: 120px 24px 60px;
   position: relative;
   background:
-    radial-gradient(ellipse 900px 560px at 50% -8%, rgba(91, 157, 255, 0.38), transparent 65%),
-    radial-gradient(ellipse 700px 420px at 50% 108%, rgba(91, 157, 255, 0.14), transparent 70%),
+    radial-gradient(ellipse 900px 560px at 50% -8%, rgba(74, 116, 167, 0.38), transparent 65%),
+    radial-gradient(ellipse 700px 420px at 50% 108%, rgba(74, 116, 167, 0.14), transparent 70%),
     var(--bg);
 }
 
@@ -627,8 +627,8 @@ body {
 }
 
 .stack-icon-dark {
-  background: #14171b;
-  border-color: #23272e;
+  background: #142a44;
+  border-color: #4a74a7;
 }
 
 .stack-icon img {
@@ -708,7 +708,7 @@ body {
 }
 
 .code-highlight-tests {
-  border-color: rgba(91, 157, 255, 0.4);
+  border-color: rgba(74, 116, 167, 0.4);
   background: var(--accent-soft);
 }
 
