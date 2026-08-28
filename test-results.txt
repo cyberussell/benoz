@@ -1,0 +1,54 @@
+
+> benoz-takehome-starter@1.0.0 test
+> vitest run --reporter=verbose
+
+
+ RUN  v2.1.9 /Users/russellparayno/Documents/Benoz
+
+ ✓ tests/validator.test.ts > required fields > reports every missing required field
+ ✓ tests/validator.test.ts > required fields > treats a whitespace-only string as missing
+ ✓ tests/validator.test.ts > required fields > does not complain about an absent optional field
+ ✓ tests/validator.test.ts > text constraints > enforces pattern
+ ✓ tests/validator.test.ts > text constraints > enforces min_length and max_length
+ ✓ tests/validator.test.ts > text constraints > enforces max_length on long_text
+ ✓ tests/validator.test.ts > number constraints > rejects non-numbers and out-of-range values
+ ✓ tests/validator.test.ts > number constraints > supports min without max
+ ✓ tests/validator.test.ts > dates > rejects malformed and impossible dates
+ ✓ tests/validator.test.ts > choice and multi_choice > rejects a value outside the options
+ ✓ tests/validator.test.ts > choice and multi_choice > enforces min_selected and max_selected
+ ✓ tests/validator.test.ts > choice and multi_choice > rejects unknown and duplicate selections
+ ✓ tests/validator.test.ts > booleans and files > rejects a non-boolean for a boolean field
+ ✓ tests/validator.test.ts > booleans and files > enforces accepted file extensions, case-insensitively
+ ✓ tests/validator.test.ts > field_comparison rules > passes when the comparison holds, including equal dates for gte
+ ✓ tests/validator.test.ts > field_comparison rules > fails when the comparison is violated, reporting against the subject field
+ ✓ tests/validator.test.ts > field_comparison rules > supports lt
+ ✓ tests/validator.test.ts > field_comparison rules > supports lte
+ ✓ tests/validator.test.ts > field_comparison rules > supports gt
+ ✓ tests/validator.test.ts > field_comparison rules > supports gte
+ ✓ tests/validator.test.ts > field_comparison rules > supports eq
+ ✓ tests/validator.test.ts > field_comparison rules > supports neq
+ ✓ tests/validator.test.ts > field_comparison rules > skips the rule when the dependency is missing, producing no error
+ ✓ tests/validator.test.ts > field_comparison rules > skips the rule when the dependency is missing and required, reporting only the base error
+ ✓ tests/validator.test.ts > field_comparison rules > skips the rule when the dependency is invalid, reporting only the base error
+ ✓ tests/validator.test.ts > field_comparison rules > skips the rule when the subject field itself is already invalid
+ ✓ tests/validator.test.ts > field_comparison rules > is inert when it references a field that does not exist in the definition
+ ✓ tests/validator.test.ts > field_comparison rules > allows multiple independent rules to both fire on the same field
+ ✓ tests/validator.test.ts > field_comparison rules > produces the same errors regardless of rule declaration order
+ ✓ tests/validator.test.ts > conditional_required rules > requires the field when the condition matches and it is missing
+ ✓ tests/validator.test.ts > conditional_required rules > does not complain when the condition matches and the field is present
+ ✓ tests/validator.test.ts > conditional_required rules > does not require the field when the condition does not match
+ ✓ tests/validator.test.ts > conditional_required rules > matches a false condition value, and does not confuse it with a missing dependency
+ ✓ tests/validator.test.ts > conditional_required rules > matches a 0 condition value
+ ✓ tests/validator.test.ts > conditional_required rules > does not coerce a numeric-looking string to match a number condition value
+ ✓ tests/validator.test.ts > conditional_required rules > matches a string condition value (already covered above), and is skipped when the dependency is invalid
+ ✓ tests/validator.test.ts > conditional_required rules > does not duplicate the required error when the field is both statically and conditionally required
+ ✓ tests/validator.test.ts > conditional_required rules > is inert when 'field' does not exist in the definition
+ ✓ tests/validator.test.ts > conditional_required rules > is inert when 'when' does not exist in the definition (never matches)
+ ✓ tests/validator.test.ts > fail-closed behaviour > reports unknown fields instead of ignoring them
+ ✓ tests/validator.test.ts > fail-closed behaviour > works for any definition it is given, with no client knowledge
+
+ Test Files  1 passed (1)
+      Tests  41 passed (41)
+   Start at  07:28:27
+   Duration  328ms (transform 81ms, setup 0ms, collect 86ms, tests 15ms, environment 0ms, prepare 39ms)
+

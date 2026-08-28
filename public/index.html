@@ -235,20 +235,60 @@
 
           <details class="terminal-fold">
             <summary>Terminal session — <code>npm test</code></summary>
-            <pre class="code-block terminal-block"><code>$ npm test 2&gt;&amp;1 | tee test-results.txt
+            <pre class="code-block terminal-block"><code>$ npm test -- --reporter=verbose
 
 &gt; benoz-takehome-starter@1.0.0 test
-&gt; vitest run
+&gt; vitest run --reporter=verbose
 
 
  RUN  v2.1.9 /Users/russellparayno/Documents/Benoz
 
- <span class="tok-pass">✓</span> tests/validator.test.ts (41 tests) 16ms
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; required fields &gt; reports every missing required field
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; required fields &gt; treats a whitespace-only string as missing
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; required fields &gt; does not complain about an absent optional field
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; text constraints &gt; enforces pattern
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; text constraints &gt; enforces min_length and max_length
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; text constraints &gt; enforces max_length on long_text
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; number constraints &gt; rejects non-numbers and out-of-range values
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; number constraints &gt; supports min without max
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; dates &gt; rejects malformed and impossible dates
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; choice and multi_choice &gt; rejects a value outside the options
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; choice and multi_choice &gt; enforces min_selected and max_selected
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; choice and multi_choice &gt; rejects unknown and duplicate selections
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; booleans and files &gt; rejects a non-boolean for a boolean field
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; booleans and files &gt; enforces accepted file extensions, case-insensitively
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; passes when the comparison holds, including equal dates for gte
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; fails when the comparison is violated, reporting against the subject field
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; supports lt
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; supports lte
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; supports gt
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; supports gte
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; supports eq
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; supports neq
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; skips the rule when the dependency is missing, producing no error
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; skips the rule when the dependency is missing and required, reporting only the base error
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; skips the rule when the dependency is invalid, reporting only the base error
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; skips the rule when the subject field itself is already invalid
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; is inert when it references a field that does not exist in the definition
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; allows multiple independent rules to both fire on the same field
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; field_comparison rules &gt; produces the same errors regardless of rule declaration order
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; requires the field when the condition matches and it is missing
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; does not complain when the condition matches and the field is present
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; does not require the field when the condition does not match
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; matches a false condition value, and does not confuse it with a missing dependency
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; matches a 0 condition value
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; does not coerce a numeric-looking string to match a number condition value
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; matches a string condition value (already covered above), and is skipped when the dependency is invalid
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; does not duplicate the required error when the field is both statically and conditionally required
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; is inert when 'field' does not exist in the definition
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; conditional_required rules &gt; is inert when 'when' does not exist in the definition (never matches)
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; fail-closed behaviour &gt; reports unknown fields instead of ignoring them
+ <span class="tok-pass">✓</span> tests/validator.test.ts &gt; fail-closed behaviour &gt; works for any definition it is given, with no client knowledge
 
  Test Files  1 passed (1)
       Tests  41 passed (41)
-   Start at  07:21:13
-   Duration  325ms (transform 92ms, setup 0ms, collect 86ms, tests 16ms, environment 0ms, prepare 50ms)</code></pre>
+   Start at  07:28:27
+   Duration  328ms (transform 81ms, setup 0ms, collect 86ms, tests 15ms, environment 0ms, prepare 39ms)</code></pre>
           </details>
 
           <a class="placeholder-link" href="https://github.com/cyberussell/benoz" target="_blank" rel="noopener">View source on GitHub →</a>
