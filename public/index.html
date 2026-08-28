@@ -76,10 +76,50 @@
       <p class="part-kicker">Part 3</p>
       <h2 class="part-title" id="part-3-title">The Code</h2>
       <div class="prose">
-        <div class="placeholder-block">
-          <p class="placeholder-label">Placeholder</p>
-          <p>Link to the repository, code walkthrough, or embedded snippets goes here.</p>
-          <a class="placeholder-link" href="https://github.com/cyberussell/benoz" target="_blank" rel="noopener">View repository on GitHub →</a>
+        <div class="code-panel">
+          <h3 class="code-panel-title">Validation Library Extension</h3>
+          <p class="code-panel-intro">Extended the starter validation library with declarative cross-field comparison and conditional-required rules, while keeping the library fully client-agnostic.</p>
+
+          <div class="code-highlights">
+            <div class="code-highlight">
+              <p class="code-highlight-label">Cross-field rules</p>
+              <p class="code-highlight-value">Supports <code>lt</code>, <code>lte</code>, <code>gt</code>, <code>gte</code>, <code>eq</code>, <code>neq</code></p>
+            </div>
+            <div class="code-highlight">
+              <p class="code-highlight-label">Conditional required</p>
+              <p class="code-highlight-value">Fields can become required based on another field's value</p>
+            </div>
+            <div class="code-highlight code-highlight-tests">
+              <p class="code-highlight-label">Tests</p>
+              <p class="code-highlight-value code-tests-pass">41<span class="code-tests-slash">/</span>41 <span class="code-tests-word">passing</span></p>
+            </div>
+          </div>
+
+          <p class="code-order-note"><strong>Evaluation order —</strong> base field validation runs first. Relational rules run second against the frozen base-validation snapshot, so one rule never depends on another rule's result.</p>
+
+          <div class="code-examples">
+            <div class="code-example">
+              <p class="code-example-label">Cross-field</p>
+              <pre class="code-block"><code>{
+  <span class="tok-key">"type"</span>: <span class="tok-str">"field_comparison"</span>,
+  <span class="tok-key">"field"</span>: <span class="tok-str">"end_date"</span>,
+  <span class="tok-key">"operator"</span>: <span class="tok-str">"gte"</span>,
+  <span class="tok-key">"compare_to"</span>: <span class="tok-str">"start_date"</span>
+}</code></pre>
+            </div>
+            <div class="code-example">
+              <p class="code-example-label">Conditional required</p>
+              <pre class="code-block"><code>{
+  <span class="tok-key">"type"</span>: <span class="tok-str">"conditional_required"</span>,
+  <span class="tok-key">"field"</span>: <span class="tok-str">"mechanic_notes"</span>,
+  <span class="tok-key">"when"</span>: <span class="tok-str">"roadworthy"</span>,
+  <span class="tok-key">"equals"</span>: <span class="tok-bool">false</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <a class="placeholder-link" href="https://github.com/cyberussell/benoz" target="_blank" rel="noopener">View source on GitHub →</a>
+          <p class="code-repo-url">https://github.com/cyberussell/benoz</p>
         </div>
       </div>
     </div>
