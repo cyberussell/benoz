@@ -171,7 +171,46 @@ body {
     var(--bg);
 }
 
-.hero-inner { max-width: 640px; display: flex; flex-direction: column; align-items: center; }
+.hero-code-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  overflow: hidden;
+  opacity: 0.16;
+  pointer-events: none;
+  user-select: none;
+  mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent),
+    linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent),
+    linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-composite: source-in;
+}
+
+.hero-code-bg code {
+  display: block;
+  column-width: 420px;
+  column-gap: 64px;
+  column-fill: auto;
+  height: 100%;
+  padding: 48px;
+  font-family: var(--mono);
+  font-size: clamp(15px, 1.5vw, 19px);
+  line-height: 1.85;
+  white-space: pre;
+  color: var(--text-muted);
+}
+
+.hero-code-bg .tok-kw { color: #c586c0; }
+.hero-code-bg .tok-fn { color: #dcdcaa; }
+.hero-code-bg .tok-str { color: #ce9178; }
+.hero-code-bg .tok-type { color: #4ec9b0; }
+.hero-code-bg .tok-num { color: #b5cea8; }
+.hero-code-bg .tok-com { color: #6a9955; }
+.hero-code-bg .tok-var { color: #9cdcfe; }
+
+.hero-inner { position: relative; z-index: 1; max-width: 640px; display: flex; flex-direction: column; align-items: center; }
 
 .hero-eyebrow {
   display: inline-block;

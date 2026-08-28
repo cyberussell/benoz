@@ -33,6 +33,54 @@
 <main id="main">
 
   <section class="hero" id="top">
+    <pre class="hero-code-bg" aria-hidden="true"><code><span class="tok-kw">import</span> { NextRequest, NextResponse } <span class="tok-kw">from</span> <span class="tok-str">"next/server"</span>;
+<span class="tok-kw">import</span> { validate } <span class="tok-kw">from</span> <span class="tok-str">"@/lib/validator"</span>;
+<span class="tok-kw">import type</span> { ClientDefinition } <span class="tok-kw">from</span> <span class="tok-str">"@/lib/types"</span>;
+
+<span class="tok-kw">export async function</span> <span class="tok-fn">POST</span>(<span class="tok-var">request</span>: <span class="tok-type">NextRequest</span>) {
+  <span class="tok-kw">const</span> { client, record } = <span class="tok-kw">await</span> request.<span class="tok-fn">json</span>();
+
+  <span class="tok-kw">const</span> <span class="tok-var">definition</span>: <span class="tok-type">ClientDefinition</span> = <span class="tok-kw">await</span> <span class="tok-fn">getDefinition</span>(client);
+  <span class="tok-kw">const</span> errors = <span class="tok-fn">validate</span>(definition, record);
+
+  <span class="tok-kw">if</span> (errors.length &gt; <span class="tok-num">0</span>) {
+    <span class="tok-kw">return</span> NextResponse.<span class="tok-fn">json</span>({ errors }, { status: <span class="tok-num">422</span> });
+  }
+
+  <span class="tok-kw">return</span> NextResponse.<span class="tok-fn">json</span>({ ok: <span class="tok-kw">true</span> });
+}
+
+<span class="tok-com">// app/dashboard/[client]/page.tsx</span>
+<span class="tok-kw">export default async function</span> <span class="tok-fn">Page</span>({ params }: { params: { client: <span class="tok-type">string</span> } }) {
+  <span class="tok-kw">const</span> definition = <span class="tok-kw">await</span> <span class="tok-fn">getDefinition</span>(params.client);
+
+  <span class="tok-kw">return</span> (
+    &lt;<span class="tok-type">main</span> className=<span class="tok-str">"dashboard"</span>&gt;
+      &lt;<span class="tok-type">h1</span>&gt;{definition.record_type}&lt;/<span class="tok-type">h1</span>&gt;
+      &lt;<span class="tok-type">ValidatorPanel</span> fields={definition.fields} rules={definition.rules} /&gt;
+    &lt;/<span class="tok-type">main</span>&gt;
+  );
+}
+
+<span class="tok-kw">interface</span> <span class="tok-type">FieldRule</span> {
+  field: <span class="tok-type">string</span>;
+  operator: <span class="tok-str">"gte"</span> | <span class="tok-str">"lte"</span> | <span class="tok-str">"eq"</span>;
+  compare_to: <span class="tok-type">string</span> | <span class="tok-type">number</span>;
+}
+
+<span class="tok-kw">const</span> <span class="tok-var">cache</span> = <span class="tok-kw">new</span> <span class="tok-type">Map</span>&lt;<span class="tok-type">string</span>, <span class="tok-type">ClientDefinition</span>&gt;();
+
+<span class="tok-kw">export async function</span> <span class="tok-fn">getDefinition</span>(<span class="tok-var">client</span>: <span class="tok-type">string</span>) {
+  <span class="tok-kw">if</span> (cache.<span class="tok-fn">has</span>(client)) <span class="tok-kw">return</span> cache.<span class="tok-fn">get</span>(client)!;
+
+  <span class="tok-kw">const</span> res = <span class="tok-kw">await</span> <span class="tok-fn">fetch</span>(<span class="tok-str">`/definitions/${client}.json`</span>, {
+    next: { revalidate: <span class="tok-num">60</span> },
+  });
+
+  <span class="tok-kw">const</span> data: <span class="tok-type">ClientDefinition</span> = <span class="tok-kw">await</span> res.<span class="tok-fn">json</span>();
+  cache.<span class="tok-fn">set</span>(client, data);
+  <span class="tok-kw">return</span> data;
+}</code></pre>
     <div class="hero-inner">
       <p class="hero-eyebrow">Take-Home Exercise</p>
       <h1 class="hero-role">Senior Full Stack Developer — Benoz AI</h1>
