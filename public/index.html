@@ -16,19 +16,16 @@
 
 <nav class="floating-nav" id="floating-nav" aria-label="Section navigation">
   <div class="nav-inner">
-    <a href="#top" class="nav-brand">RP</a>
-    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle navigation menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="#top" class="nav-brand" data-label="Back to top">RP</a>
     <ul class="nav-list" id="nav-list">
-      <li><a href="#part-1" data-nav>Part 1</a></li>
-      <li><a href="#part-2" data-nav>Part 2</a></li>
-      <li><a href="#part-3" data-nav>Part 3</a></li>
-      <li><a href="#part-4" data-nav>Part 4</a></li>
-      <li><a href="#part-5" data-nav>Part 5</a></li>
-      <li><a href="#part-6" data-nav>Part 6</a></li>
-      <li><a href="#part-7" data-nav>Part 7</a></li>
-      <li><a href="#part-8" data-nav>Part 8</a></li>
+      <li><a href="#part-1" data-nav data-label="Why I Fit This Role"><span>1</span></a></li>
+      <li><a href="#part-2" data-nav data-label="The Video"><span>2</span></a></li>
+      <li><a href="#part-3" data-nav data-label="The Code"><span>3</span></a></li>
+      <li><a href="#part-4" data-nav data-label="Six Decisions"><span>4</span></a></li>
+      <li><a href="#part-5" data-nav data-label="Architectural Stack"><span>5</span></a></li>
+      <li><a href="#part-6" data-nav data-label="Closing Note"><span>6</span></a></li>
+      <li><a href="#part-7" data-nav data-label="How I Work With AI"><span>7</span></a></li>
+      <li><a href="#part-8" data-nav data-label="Your AI Transcripts"><span>8</span></a></li>
     </ul>
   </div>
 </nav>
@@ -39,7 +36,11 @@
     <div class="hero-inner">
       <p class="hero-eyebrow">Take-Home Exercise</p>
       <h1 class="hero-role">Senior Full Stack Developer — Benoz AI</h1>
-      <p class="hero-applicant">Applicant: Russell Parayno</p>
+      <p class="hero-applicant">A walkthrough of my responses, code, and design decisions for the role.</p>
+      <div class="hero-meta">
+        <span class="hero-meta-label">Applicant</span>
+        <span class="hero-meta-value">Russell Parayno</span>
+      </div>
     </div>
     <div class="hero-scroll-cue" aria-hidden="true">
       <span></span>
@@ -249,12 +250,20 @@
       <p class="part-kicker">Part 8</p>
       <h2 class="part-title" id="part-8-title">Your AI Transcripts</h2>
       <div class="prose">
-        <div class="placeholder-block">
-          <p class="placeholder-label">Placeholder</p>
-          <p>Links to or embeds of AI session transcripts go here.</p>
-          <a class="placeholder-link" href="https://claude.ai/public/artifacts/3e91d115-c243-4cd3-b8e9-7a799077cbbc" target="_blank" rel="noopener">Raw Conversation Export — Event Workflow Session →</a>
-          <a class="placeholder-link" href="https://chatgpt.com/share/6a9139da-ca10-83ec-b76f-782e598b7d26" target="_blank" rel="noopener">Attacking the Event Design →</a>
-        </div>
+        <ul class="transcript-list">
+          <li>
+            <span class="transcript-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 L13.6 9 L20.5 5.8 L15 11 L22.5 12 L15 13 L20.5 18.2 L13.6 15 L12 22 L10.4 15 L3.5 18.2 L9 13 L1.5 12 L9 11 L3.5 5.8 L10.4 9 Z" fill="#D97757"/></svg>
+            </span>
+            <a class="placeholder-link" href="https://claude.ai/public/artifacts/3e91d115-c243-4cd3-b8e9-7a799077cbbc" target="_blank" rel="noopener">Raw Conversation Export — Event Workflow Session →</a>
+          </li>
+          <li>
+            <span class="transcript-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="#10A37F"><ellipse cx="12" cy="5.5" rx="2" ry="4"/><ellipse cx="12" cy="5.5" rx="2" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="5.5" rx="2" ry="4" transform="rotate(120 12 12)"/><ellipse cx="12" cy="5.5" rx="2" ry="4" transform="rotate(180 12 12)"/><ellipse cx="12" cy="5.5" rx="2" ry="4" transform="rotate(240 12 12)"/><ellipse cx="12" cy="5.5" rx="2" ry="4" transform="rotate(300 12 12)"/></g></svg>
+            </span>
+            <a class="placeholder-link" href="https://chatgpt.com/share/6a9139da-ca10-83ec-b76f-782e598b7d26" target="_blank" rel="noopener">Attacking the Event Design →</a>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
