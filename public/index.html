@@ -130,17 +130,31 @@
       <p class="part-kicker">Part 4</p>
       <h2 class="part-title" id="part-4-title">Six Decisions</h2>
       <div class="prose">
-        <div class="placeholder-block">
-          <p class="placeholder-label">Placeholder</p>
-          <p>Six key design/engineering decisions go here, one per card.</p>
-        </div>
         <ol class="decision-list">
-          <li class="decision-card"><span class="decision-num">01</span><div class="decision-text">Decision one — replace with content.</div></li>
-          <li class="decision-card"><span class="decision-num">02</span><div class="decision-text">Decision two — replace with content.</div></li>
-          <li class="decision-card"><span class="decision-num">03</span><div class="decision-text">Decision three — replace with content.</div></li>
-          <li class="decision-card"><span class="decision-num">04</span><div class="decision-text">Decision four — replace with content.</div></li>
-          <li class="decision-card"><span class="decision-num">05</span><div class="decision-text">Decision five — replace with content.</div></li>
-          <li class="decision-card"><span class="decision-num">06</span><div class="decision-text">Decision six — replace with content.</div></li>
+          <li class="decision-card">
+            <div class="decision-row"><span class="decision-num">01</span><div class="decision-text"><strong>Database —</strong> I'd choose PostgreSQL. Client-defined fields can stay flexible in JSONB, while PostgreSQL gives strong transactions, relationships, and tenant isolation through RLS. The cost is more work managing JSONB indexes and RLS policies. With MongoDB, Part 3's validation logic could stay the same, but I'd lose database-level RLS and rely more on application code for tenant isolation.</div></div>
+            <p class="decision-meta">377 / 600 characters</p>
+          </li>
+          <li class="decision-card">
+            <div class="decision-row"><span class="decision-num">02</span><div class="decision-text"><strong>Scope —</strong> I deliberately did not add compound AND/OR conditions. Supporting them would turn a simple rule format into a more complex expression system, making validation, testing, and error handling harder. I stopped at simple rules because they meet current requirements and keep the validator predictable and maintainable. I would add compound conditions only when a real client requirement justifies it. Cross-record checks, like preventing double-booking, are a separate, more significant boundary I have not addressed yet.</div></div>
+            <p class="decision-meta">517 / 600 characters</p>
+          </li>
+          <li class="decision-card">
+            <div class="decision-row"><span class="decision-num">03</span><div class="decision-text"><strong>Isolation —</strong> I'd choose a shared database with strict tenant isolation using tenant_id and RLS. It keeps infrastructure cost low, onboarding simple, and lets one platform serve many clients efficiently. The tradeoff is that logical isolation cannot satisfy a client requiring their data to never share infrastructure with others. I accept losing that client rather than making every tenant pay the cost and operational complexity of dedicated infrastructure.</div></div>
+            <p class="decision-meta">445 / 600 characters</p>
+          </li>
+          <li class="decision-card">
+            <div class="decision-row"><span class="decision-num">04</span><div class="decision-text"><strong>Leadership —</strong> I explain the bug, then require the developer to fix it and add a regression test themselves. I don't take over the work or restrict AI. The problem isn't using AI; it's submitting code you can't understand or defend. AI-generated code carries the same ownership as handwritten code: if you submit it, you own it. Going forward, every bug-fix PR requires a regression test, not just this one. This slows PRs slightly, but builds real judgment and cuts repeat risk.</div></div>
+            <p class="decision-meta">464 / 600 characters</p>
+          </li>
+          <li class="decision-card">
+            <div class="decision-row"><span class="decision-num">05</span><div class="decision-text"><strong>Versioning —</strong> I would keep every version of a definition and record which version was used for each submission. When the rules change, the new rules apply to new records only. The 10,000 old records keep the rules they were originally checked against. If old records must follow the new rules, I would update them through a separate, controlled migration. This adds complexity, but keeps the history clear and prevents unexpected changes to old records.</div></div>
+            <p class="decision-meta">439 / 600 characters</p>
+          </li>
+          <li class="decision-card">
+            <div class="decision-row"><span class="decision-num">06</span><div class="decision-text"><strong>Editors —</strong> I would let client admins manage their definitions through a guarded UI, long-term. Engineering-managed changes are safer but become a bottleneck as clients grow; direct JSON editing is too easy to get wrong. I'd build a server-side definition linter first, used by engineering in the interim, then reused as the UI's own validation before every published change creates a new version. Cost: more development and maintenance, but safe self-service without depending on engineers for every update.</div></div>
+            <p class="decision-meta">496 / 600 characters</p>
+          </li>
         </ol>
       </div>
     </div>
