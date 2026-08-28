@@ -288,6 +288,29 @@ body {
 }
 .placeholder-link:hover { text-decoration: underline; }
 
+/* ---------- Brief box ---------- */
+
+.brief-box {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+
+.brief-box .brief-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+}
+
+.brief-box .brief-text {
+  color: #ffe066;
+  margin: 0;
+}
+
 /* ---------- Six decisions ---------- */
 
 .decision-list {
