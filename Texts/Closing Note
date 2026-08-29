@@ -2,4 +2,4 @@ I must admit that the EventFlow is vague and lacks informattion that will have s
 
 I left out nice-to-haves like ticket types (i.e. early birds, regular, vip, student), sale windows, discounts, optional waitlist (i.e. when an event sells out) or even the simple feature of adding the date in the attendees calendar.
 
-I am least confident on the matter of pake demand model as the "2000 registrations in teh first hour after a popular event opens" may mean 1000 registrations in 30 seconds or 5 minutes. I have not done this in demo or any real deployed systems. 
+I am least confident on the matter of peak demand model as the "2,000 registrations in the first hour after a popular event opens" may mean 1,000 registrations in 30 seconds or 5 minutes. I have not done this in demo or any real deployed systems. 
