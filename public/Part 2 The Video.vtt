@@ -1,0 +1,185 @@
+WEBVTT
+
+1
+00:00:15.090 --> 00:00:20.250
+So, I asked Claude to attack decision three
+
+2
+00:00:20.250 --> 00:00:24.850
+regarding isolation, I said that my decision is
+
+3
+00:00:24.850 --> 00:00:26.890
+to use a shared database with strict tenant
+
+4
+00:00:26.890 --> 00:00:30.090
+isolation in comparison with using a dedicated database.
+
+5
+00:00:30.310 --> 00:00:32.290
+I argued that dedicated DB per client would
+
+6
+00:00:32.290 --> 00:00:35.530
+be a better choice, focus on security, cost,
+
+7
+00:00:35.670 --> 00:00:38.810
+risk in terms of operation, and be critical.
+
+8
+00:00:39.710 --> 00:00:46.450
+So, the security is okay, however, you know,
+
+9
+00:00:46.530 --> 00:00:50.050
+I do believe that RLS will not magically
+
+10
+00:00:50.050 --> 00:00:55.670
+make shared database safe, not unless you have
+
+11
+00:00:55.670 --> 00:00:59.610
+a very strict policy or privileged operations that
+
+12
+00:00:59.610 --> 00:01:03.670
+could bypass the isolation, okay, so that's it.
+
+13
+00:01:05.410 --> 00:01:08.770
+The cost, of course, I do expect that
+
+14
+00:01:08.770 --> 00:01:12.610
+the cost using a shared is cheaper, however,
+
+15
+00:01:15.390 --> 00:01:18.950
+it says that cheaper that ignores still, yeah,
+
+16
+00:01:19.590 --> 00:01:22.770
+cheaper that ignores still risk isn't actually cheaper,
+
+17
+00:01:23.370 --> 00:01:25.610
+yeah, you are right when you say that,
+
+18
+00:01:26.550 --> 00:01:29.210
+also, of course, this one, I always have
+
+19
+00:01:29.210 --> 00:01:32.750
+this kind of problem with my previous clients,
+
+20
+00:01:33.870 --> 00:01:37.130
+one tenant's expensive query or write burst degrades
+
+21
+00:01:37.130 --> 00:01:39.450
+every other tenant sharing that engine.
+
+22
+00:01:40.270 --> 00:01:46.190
+In terms of operational risk, okay, every migration
+
+23
+00:01:46.190 --> 00:01:49.110
+is a platform-wide bet instantly in the
+
+24
+00:01:49.110 --> 00:01:51.830
+shared model, there's no canary, a single bad
+
+25
+00:01:51.830 --> 00:01:56.470
+migration can degrade or corrupt every tenant's data
+
+26
+00:01:56.470 --> 00:02:01.990
+simultaneously with zero natural containment, however, dedicated infrastructure
+
+27
+00:02:01.990 --> 00:02:05.650
+lets migrations roll out tenant by tenant, a
+
+28
+00:02:05.650 --> 00:02:08.389
+mistake surfaced on tenant one before it reaches
+
+29
+00:02:08.389 --> 00:02:12.810
+tenant two, and this is good, okay, so
+
+30
+00:02:12.810 --> 00:02:16.890
+the reason, you know, see, I think you
+
+31
+00:02:16.890 --> 00:02:19.930
+have a good point there, okay, however, I
+
+32
+00:02:19.930 --> 00:02:24.570
+would not revise my decision that I still
+
+33
+00:02:24.570 --> 00:02:32.720
+need to choose for the shared database, because
+
+34
+00:02:32.720 --> 00:02:38.000
+if every client gets a separate database, every
+
+35
+00:02:38.000 --> 00:02:43.380
+new client adds infrastructure, you have added migrations,
+
+36
+00:02:43.600 --> 00:02:50.020
+monitoring, backups, and operational work, I don't say
+
+37
+00:02:50.020 --> 00:02:53.020
+that I don't want to work on it,
+
+38
+00:02:53.060 --> 00:02:58.120
+but that increases both cost and complexity, so
+
+39
+00:02:58.120 --> 00:03:02.720
+there isn't a solution that satisfies both clients,
+
+40
+00:03:02.920 --> 00:03:05.760
+with my choice, I have to accept that
+
+41
+00:03:05.760 --> 00:03:11.180
+the client requiring physical separate infra cannot use
+
+42
+00:03:11.180 --> 00:03:15.840
+this platform, yes, if I go with the
+
+43
+00:03:15.840 --> 00:03:21.600
+shared database, I would lose client, but basically,
+
+44
+00:03:21.600 --> 00:03:27.580
+we cannot please all clients, so I would
+
+45
+00:03:27.580 --> 00:03:30.660
+still go with the shared database in this
+
+46
+00:03:30.660 --> 00:03:32.260
+case, thank you.
