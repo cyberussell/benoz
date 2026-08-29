@@ -536,6 +536,19 @@ body {
   margin-bottom: 8px;
 }
 
+.video-panel {
+  border: 1px solid var(--border);
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.video-panel video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .placeholder-label {
   font-family: var(--mono);
   font-size: 11px;
