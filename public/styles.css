@@ -525,11 +525,11 @@ body {
 }
 
 .part-note {
-  margin: 10px 0 0;
+  margin: 28px 0 0;
   font-size: 13.5px;
   line-height: 1.6;
   color: var(--text-muted);
-  text-align: right;
+  text-align: left;
 }
 
 .part-note a {
