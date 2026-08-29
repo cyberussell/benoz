@@ -377,6 +377,7 @@
               </div>
               <p class="tech-stack-tech">Next.js + React</p>
               <p class="tech-stack-reason">Keeps high-volume browsing traffic at the edge so event-opening bursts do not directly increase transactional database load.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> Remix / SvelteKit — <strong>Why not:</strong> Next.js better fits the chosen static/ISR edge-delivery strategy and existing React approach for absorbing burst-heavy public reads.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -386,6 +387,7 @@
               </div>
               <p class="tech-stack-tech">Fastify</p>
               <p class="tech-stack-reason">Lightweight API layer chosen for the critical transactional services without the heavier startup/runtime model of NestJS.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> NestJS — <strong>Why not:</strong> Viable, but its heavier bootstrap model is a weaker fit for serverless cold starts; more attractive with an entirely always-on backend.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -396,6 +398,8 @@
               </div>
               <p class="tech-stack-tech">Vercel (serverless) + AWS Fargate / Fly.io (always-on)</p>
               <p class="tech-stack-reason">Serverless fits the mostly-idle workload, while the critical registration path avoids cold-start risk during known event-opening bursts.</p>
+              <p class="tech-stack-alt"><strong>Alternative (public/low-freq):</strong> Fly.io / Render — <strong>Why not:</strong> Always-on hosting provides consistency, but the system is genuinely idle most of the year, making elastic/on-demand capacity a better cost fit.</p>
+              <p class="tech-stack-alt"><strong>Alternative (checkout):</strong> Full serverless — <strong>Why not:</strong> A cold-start storm during a known event-opening burst adds unnecessary latency risk to the system's most critical workflow.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -405,6 +409,7 @@
               </div>
               <p class="tech-stack-tech">PostgreSQL + PgBouncer / RDS Proxy</p>
               <p class="tech-stack-reason">Provides the transactional guarantees and locking needed to protect capacity invariants and prevent overselling. Connection pooling is mandatory for burst traffic.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> MySQL — <strong>Why not:</strong> PostgreSQL's transactional locking capabilities and native support for the selected reporting techniques better match the capacity-control requirements.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -414,6 +419,7 @@
               </div>
               <p class="tech-stack-tech">Dedicated managed Redis (persistence + replication)</p>
               <p class="tech-stack-reason">Handles short-lived reservation holds and counters with TTLs while keeping the hottest contention away from PostgreSQL.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> PostgreSQL row locks + connection pooler only — <strong>Why not:</strong> Under the ~2,000 registrations/minute working burst assumption, keeping the hottest temporary hold/counter operations in PostgreSQL creates unnecessary contention.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -423,6 +429,7 @@
               </div>
               <p class="tech-stack-tech">PostgreSQL read replica</p>
               <p class="tech-stack-reason">Keeps dashboard and reporting workloads structurally isolated from registration throughput.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> Separate event-driven aggregate store — <strong>Why not:</strong> Offers stronger isolation but introduces significantly more infrastructure and implementation complexity than the current scale requires.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -432,6 +439,7 @@
               </div>
               <p class="tech-stack-tech">BullMQ + separate Redis instance</p>
               <p class="tech-stack-reason">Decouples ticket generation, email delivery, reminders, and other asynchronous work from checkout. Kept separate from the capacity/hold Redis.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> SQS + Lambda — <strong>Why not:</strong> Attractive for an AWS-native architecture, but BullMQ fits the selected Node/Redis stack with less additional infrastructure.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -442,6 +450,8 @@
               </div>
               <p class="tech-stack-tech">Supabase Auth or Clerk (managed)</p>
               <p class="tech-stack-reason">Organizer/staff accounts use managed authentication and roles. Attendee actions like ticket resend or cancellation use managed passwordless/magic-link auth rather than custom security code.</p>
+              <p class="tech-stack-alt"><strong>Alternative (organizer/staff):</strong> AWS Cognito — <strong>Why not:</strong> Viable, but adds AWS-specific complexity without a requirement that justifies it for this system.</p>
+              <p class="tech-stack-alt"><strong>Alternative (attendee):</strong> Full attendee account system — <strong>Why not:</strong> Introduces unnecessary signup/password/account-management friction when the confirmed requirement only needs secure access to actions like resend and cancellation/refund.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -451,6 +461,7 @@
               </div>
               <p class="tech-stack-tech">Stripe</p>
               <p class="tech-stack-reason">Mature SDKs, hosted/tokenized payment flows, wallets, international reach, and reduced PCI burden. Regional gateways remain a future option if operating requirements change.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> PayMongo / Xendit — <strong>Why not:</strong> Local payment rails aren't part of the confirmed scope; Stripe already covers required cards/wallets with broader international reach and mature tooling.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -460,6 +471,7 @@
               </div>
               <p class="tech-stack-tech">Postmark or Resend</p>
               <p class="tech-stack-reason">Optimized for transactional deliverability and queued ticket/reminder bursts without requiring us to manage sender reputation infrastructure ourselves.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> Amazon SES — <strong>Why not:</strong> Can reduce cost at higher volume, but requires more sender-reputation and operational management than this workload currently justifies.</p>
             </div>
 
             <div class="tech-stack-card">
@@ -471,6 +483,7 @@
               <p class="tech-stack-tech">Sentry + Better Stack / UptimeRobot</p>
               <p class="tech-stack-reason">Enough observability for a mostly-idle system without paying for a heavyweight APM platform before the scale requires it.</p>
               <p class="tech-stack-watch">Watching: PostgreSQL connection-pool saturation, Redis replication lag/failover, checkout errors, queue failures.</p>
+              <p class="tech-stack-alt"><strong>Alternative:</strong> Datadog / New Relic — <strong>Why not:</strong> A full unified APM platform gives deeper observability, but its cost and operational footprint aren't justified for a mostly-idle system at this stage.</p>
             </div>
           </div>
 

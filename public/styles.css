@@ -670,6 +670,27 @@ body {
   border-top: 1px solid var(--border);
 }
 
+.tech-stack-alt {
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.tech-stack-alt + .tech-stack-alt,
+.tech-stack-watch + .tech-stack-alt {
+  margin-top: 4px;
+  padding-top: 0;
+  border-top: none;
+}
+
+.tech-stack-alt strong {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
 .callout-note {
   font-size: 14px;
   color: var(--text-secondary);
