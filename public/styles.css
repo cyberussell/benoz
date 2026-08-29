@@ -532,6 +532,13 @@ body {
   text-align: right;
 }
 
+.part-note a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.part-note a:hover { text-decoration: underline; }
+
 /* ---------- Placeholder blocks ---------- */
 
 .placeholder-block {
