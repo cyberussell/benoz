@@ -20,7 +20,6 @@
   --hero-code-opacity: 0.1;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --nav-h: 60px;
   --max-w: 780px;
 }
 
@@ -102,7 +101,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--nav-h) + 32px);
 }
 
 body {
@@ -479,7 +477,7 @@ body {
 .part {
   padding: 96px 24px;
   border-top: 1px solid var(--border);
-  scroll-margin-top: calc(var(--nav-h) + 16px);
+  scroll-margin-top: 24px;
 }
 
 .part:nth-of-type(even) {
