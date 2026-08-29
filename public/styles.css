@@ -541,6 +541,14 @@ body {
   background: #000;
   border-radius: 12px;
   overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.video-duration {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin: 0 0 20px;
 }
 
 .video-panel video {
