@@ -921,6 +921,23 @@ body {
   color: #7cfc00;
 }
 
+.transcript-body {
+  margin: 0;
+  padding: 18px 20px 22px;
+  border-top: 1px solid var(--border);
+}
+
+.transcript-body p {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0 0 16px;
+}
+
+.transcript-body p:last-child {
+  margin-bottom: 0;
+}
+
 .code-panel .code-repo-url {
   font-family: var(--mono);
   font-size: 12.5px;
