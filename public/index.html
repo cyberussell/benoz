@@ -366,96 +366,120 @@
         </div>
         <div class="stack-panel">
           <p class="stack-panel-label">Choosen Tech Stack</p>
+          <p class="tech-stack-note">This is the condensed implementation stack. The full trade-off analysis, alternatives considered, stress-test adjustments, and reasoning are documented in <a href="https://claude.ai/public/artifacts/bc548508-87be-4a03-80bf-5488ba7f2e69" target="_blank" rel="noopener">Event Workflow — Requirements &amp; Capability Analysis, §9 — Technology Stack</a>.</p>
 
-          <div class="stack-grid">
-            <div class="stack-category">
-              <h3 class="stack-category-title">Frontend</h3>
-              <div class="stack-items">
-                <div class="stack-item">
-                  <span class="stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Next.js</span>
-                </div>
-                <div class="stack-item">
-                  <span class="stack-icon"><img src="https://cdn.simpleicons.org/react" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">React</span>
-                </div>
-                <div class="stack-item">
-                  <span class="stack-icon"><img src="https://cdn.simpleicons.org/typescript" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">TypeScript</span>
-                </div>
-                <div class="stack-item">
-                  <span class="stack-icon"><img src="https://cdn.simpleicons.org/tailwindcss" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Tailwind CSS</span>
-                </div>
+          <div class="tech-stack-grid">
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Frontend</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="" width="16" height="16" loading="lazy"></span>
+                <span class="tech-stack-icon"><img src="https://cdn.simpleicons.org/react" alt="" width="16" height="16" loading="lazy"></span>
               </div>
+              <p class="tech-stack-tech">Next.js + React</p>
+              <p class="tech-stack-reason">Keeps high-volume browsing traffic at the edge so event-opening bursts do not directly increase transactional database load.</p>
             </div>
 
-            <div class="stack-category">
-              <h3 class="stack-category-title">Backend &amp; Hosting</h3>
-              <div class="stack-items">
-                <div class="stack-item">
-                  <span class="stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Next.js</span>
-                </div>
-                <div class="stack-item">
-                  <span class="stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Vercel</span>
-                </div>
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Backend</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/fastify/ffffff" alt="" width="16" height="16" loading="lazy"></span>
               </div>
+              <p class="tech-stack-tech">Fastify</p>
+              <p class="tech-stack-reason">Lightweight API layer chosen for the critical transactional services without the heavier startup/runtime model of NestJS.</p>
             </div>
 
-            <div class="stack-category">
-              <h3 class="stack-category-title">Data Layer</h3>
-              <div class="stack-items">
-                <div class="stack-item">
-                  <span class="stack-icon"><img src="https://cdn.simpleicons.org/supabase" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Supabase</span>
-                </div>
-                <div class="stack-item">
-                  <span class="stack-icon"><img src="https://cdn.simpleicons.org/postgresql" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">PostgreSQL</span>
-                </div>
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Hosting</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="" width="16" height="16" loading="lazy"></span>
+                <span class="tech-stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/flydotio/ffffff" alt="" width="16" height="16" loading="lazy"></span>
               </div>
+              <p class="tech-stack-tech">Vercel (serverless) + AWS Fargate / Fly.io (always-on)</p>
+              <p class="tech-stack-reason">Serverless fits the mostly-idle workload, while the critical registration path avoids cold-start risk during known event-opening bursts.</p>
             </div>
 
-            <div class="stack-category">
-              <h3 class="stack-category-title">Auth</h3>
-              <div class="stack-items">
-                <div class="stack-item">
-                  <span class="stack-icon"><img src="https://cdn.simpleicons.org/supabase" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Supabase Auth</span>
-                </div>
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Database</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon"><img src="https://cdn.simpleicons.org/postgresql" alt="" width="16" height="16" loading="lazy"></span>
               </div>
+              <p class="tech-stack-tech">PostgreSQL + PgBouncer / RDS Proxy</p>
+              <p class="tech-stack-reason">Provides the transactional guarantees and locking needed to protect capacity invariants and prevent overselling. Connection pooling is mandatory for burst traffic.</p>
             </div>
 
-            <div class="stack-category">
-              <h3 class="stack-category-title">Payments</h3>
-              <div class="stack-items">
-                <div class="stack-item">
-                  <span class="stack-icon"><img src="https://cdn.simpleicons.org/stripe" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Stripe</span>
-                </div>
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">High-Contention Capacity Layer</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon"><img src="https://cdn.simpleicons.org/redis" alt="" width="16" height="16" loading="lazy"></span>
               </div>
+              <p class="tech-stack-tech">Dedicated managed Redis (persistence + replication)</p>
+              <p class="tech-stack-reason">Handles short-lived reservation holds and counters with TTLs while keeping the hottest contention away from PostgreSQL.</p>
             </div>
 
-            <div class="stack-category">
-              <h3 class="stack-category-title">Monitoring</h3>
-              <div class="stack-items">
-                <div class="stack-item">
-                  <span class="stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Vercel Observability</span>
-                </div>
-                <div class="stack-item">
-                  <span class="stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/sentry/ffffff" alt="" width="24" height="24" loading="lazy"></span>
-                  <span class="stack-name">Sentry</span>
-                </div>
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Reporting</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon"><img src="https://cdn.simpleicons.org/postgresql" alt="" width="16" height="16" loading="lazy"></span>
               </div>
+              <p class="tech-stack-tech">PostgreSQL read replica</p>
+              <p class="tech-stack-reason">Keeps dashboard and reporting workloads structurally isolated from registration throughput.</p>
             </div>
+
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Background Jobs</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon"><img src="https://cdn.simpleicons.org/redis" alt="" width="16" height="16" loading="lazy"></span>
+              </div>
+              <p class="tech-stack-tech">BullMQ + separate Redis instance</p>
+              <p class="tech-stack-reason">Decouples ticket generation, email delivery, reminders, and other asynchronous work from checkout. Kept separate from the capacity/hold Redis.</p>
+            </div>
+
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Authentication</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon"><img src="https://cdn.simpleicons.org/supabase" alt="" width="16" height="16" loading="lazy"></span>
+                <span class="tech-stack-icon"><img src="https://cdn.simpleicons.org/clerk" alt="" width="16" height="16" loading="lazy"></span>
+              </div>
+              <p class="tech-stack-tech">Supabase Auth or Clerk (managed)</p>
+              <p class="tech-stack-reason">Organizer/staff accounts use managed authentication and roles. Attendee actions like ticket resend or cancellation use managed passwordless/magic-link auth rather than custom security code.</p>
+            </div>
+
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Payments</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon"><img src="https://cdn.simpleicons.org/stripe" alt="" width="16" height="16" loading="lazy"></span>
+              </div>
+              <p class="tech-stack-tech">Stripe</p>
+              <p class="tech-stack-reason">Mature SDKs, hosted/tokenized payment flows, wallets, international reach, and reduced PCI burden. Regional gateways remain a future option if operating requirements change.</p>
+            </div>
+
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Email</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/resend/ffffff" alt="" width="16" height="16" loading="lazy"></span>
+              </div>
+              <p class="tech-stack-tech">Postmark or Resend</p>
+              <p class="tech-stack-reason">Optimized for transactional deliverability and queued ticket/reminder bursts without requiring us to manage sender reputation infrastructure ourselves.</p>
+            </div>
+
+            <div class="tech-stack-card">
+              <p class="tech-stack-layer">Monitoring</p>
+              <div class="tech-stack-icons">
+                <span class="tech-stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/sentry/ffffff" alt="" width="16" height="16" loading="lazy"></span>
+                <span class="tech-stack-icon stack-icon-dark"><img src="https://cdn.simpleicons.org/betterstack/ffffff" alt="" width="16" height="16" loading="lazy"></span>
+              </div>
+              <p class="tech-stack-tech">Sentry + Better Stack / UptimeRobot</p>
+              <p class="tech-stack-reason">Enough observability for a mostly-idle system without paying for a heavyweight APM platform before the scale requires it.</p>
+              <p class="tech-stack-watch">Watching: PostgreSQL connection-pool saturation, Redis replication lag/failover, checkout errors, queue failures.</p>
+            </div>
+          </div>
+
+          <div class="callout-note">
+            <p><strong>Why this architecture:</strong> The public/read-heavy side is optimized for elasticity and low idle cost. The registration path is optimized for correctness and predictable latency under burst contention. Reporting, jobs, and temporary reservation state are isolated so they cannot degrade the critical checkout path.</p>
           </div>
 
           <div class="stack-links">
             <a class="placeholder-link" href="/event-architecture-diagrams.html" target="_blank" rel="noopener">View architecture diagrams reference →</a>
-            <a class="placeholder-link" href="https://claude.ai/public/artifacts/bc548508-87be-4a03-80bf-5488ba7f2e69" target="_blank" rel="noopener">Event Workflow — Requirements &amp; Capability Analysis →</a>
           </div>
         </div>
       </div>
